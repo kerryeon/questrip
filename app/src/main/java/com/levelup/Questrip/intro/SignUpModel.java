@@ -24,22 +24,42 @@ final class SignUpModel {
         this.terms = false;
     }
 
+    /**
+     * 필드에서 닉네임을 반환합니다.
+     * @return 닉네임
+     */
     String getNickname() {
         return this.nickname;
     }
 
+    /**
+     * 필드에서 생년월일을 반환합니다.
+     * @return 생년월일
+     */
     long getBirthday() {
         return this.birthday;
     }
 
+    /**
+     * 필드에서 주소를 반환합니다.
+     * @return 주소
+     */
     String getAddress() {
         return this.address;
     }
 
+    /**
+     * 필드에서 세부주소를 반환합니다.
+     * @return 세부주소
+     */
     String getAddressDetail() {
         return this.addressDetail;
     }
 
+    /**
+     * 필드에서 약관 동의 여부를 반환합니다.
+     * @return 약관 동의 여부
+     */
     boolean getTerms() {
         return this.terms;
     }
@@ -47,7 +67,7 @@ final class SignUpModel {
     /**
      * 회원가입에 필요한 양식을 만들어주는 Builder 입니다.
      */
-    class Builder {
+    static class Builder {
 
         SignUpModel model;
 

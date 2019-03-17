@@ -12,7 +12,7 @@ package com.levelup.Questrip.intro;
 final class SignUpManager {
 
     /**
-     * 로그인에 실패한 경우를 나열합니다.
+     * 회원가입에 실패한 경우를 나열합니다.
      *
      * 담당자: 김호
      */
@@ -31,6 +31,10 @@ final class SignUpManager {
      */
     @FunctionalInterface
     interface OnFailure {
+        /**
+         * 로그인에 실패한 경우를 처리합니다.
+         * @param failed: 로그인에 실패한 이유
+         */
         void run(Failed failed);
     }
 
@@ -38,9 +42,9 @@ final class SignUpManager {
      * 회원가입을 시도합니다.
      * @param model: 회원가입할 유저의 정보를 가지고 있습니다.
      * @param success: 회원가입에 성공한 경우의 이벤트입니다.
-     * @param fail: 회원가입에 실패한 경우의 이벤트입니다.
+     * @param failure: 회원가입에 실패한 경우의 이벤트입니다.
      */
-    void trySignUp(final SignUpModel model, Runnable success, OnFailure fail) {
+    static void trySignUp(final SignUpModel model, Runnable success, OnFailure failure) {
         // TODO to be implemented.
         success.run();
     }

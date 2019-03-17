@@ -1,4 +1,4 @@
-package com.levelup.Questrip.intro;
+package com.levelup.Questrip.utils;
 
 /**
  * 사용자의 집주소를 불러오는 프로세스를 담당하는 클래스입니다.
@@ -26,8 +26,13 @@ final class AddressManager {
         void run(String address);
     }
 
-    static void tryGetAddress(OnSuccess success, Runnable fail) {
+    /**
+     * 사용자의 주소를 얻기 시작합니다.
+     * @param success: 주소를 얻었을 경우의 이벤트입니다.
+     * @param failure: 주소를 얻지 못했을 경우의 이벤트입니다.
+     */
+    static void tryGetAddress(OnSuccess success, Runnable failure) {
         // TODO to be implemented.
-        fail.run();
+        failure.run();
     }
 }

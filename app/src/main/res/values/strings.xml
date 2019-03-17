@@ -1,4 +1,20 @@
 <resources>
+    <!-- App Configuration -->
     <string name="app_name">Questrip</string>
-    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_maps">Questrip</string>
+    <!-- Facebook Login API -->
+    <string name="facebook_app_id">716742638722224</string>
+    <string name="fb_login_protocol_scheme">fb716742638722224</string>
+    <!-- IntroActivity -->
+    <string name="intro_on_failure_login">로그인에 실패했습니다. 잠시 후 다시 시도해주세요.</string>
+    <string name="intro_on_failure_canceled">로그인하셔야 앱을 사용하실 수 있습니다.</string>
+    <!-- SignUpActivity -->
+    <string name="sign_up_check_nickname">닉네임을 확인해주세요.</string>
+    <string name="sign_up_check_birthday">생년월일을 확인해주세요.</string>
+    <string name="sign_up_check_address">주소를 확인해주세요.</string>
+    <string name="sign_up_check_terms">약관에 동의하셔야 합니다.</string>
+    <!-- Common -->
+    <string name="common_alert_title">알림</string>
+    <string name="common_alert_confirm">확인</string>
+    <string name="common_unknown_failure">알 수 없는 오류</string>
 </resources>

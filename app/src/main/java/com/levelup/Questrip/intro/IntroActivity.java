@@ -2,11 +2,13 @@ package com.levelup.Questrip.intro;
 
 import android.content.Intent;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.levelup.Questrip.R;
+import com.levelup.Questrip.common.Bootstrapper;
+import com.levelup.Questrip.common.CommonAlert;
 import com.levelup.Questrip.explore.MainActivity;
+import com.levelup.Questrip.utils.LoginManager;
 
 /**
  * 인트로 화면 액티비티입니다.
@@ -20,9 +22,9 @@ import com.levelup.Questrip.explore.MainActivity;
  * 로그인에는 성공했으나 처음 사용하는 사용자라면, 회원가입 화면으로 이동합니다.
  * 로그인에 실패한다면, 로그인을 다시 시도해달라는 알림창을 한번 띄운 후, 앱을 종료합니다.
  */
-public class IntroActivity extends AppCompatActivity {
+public final class IntroActivity extends Bootstrapper {
 
-    private static long waitTime = 1200;
+    private static final long waitTime = 1200;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,9 @@ public class IntroActivity extends AppCompatActivity {
         waitAndPass();
     }
 
+    /**
+     * 로고를 잠시 보여주고, 로그인을 시도합니다.
+     */
     private void waitAndPass() {
         // 이벤트 핸들러
         Handler handler = new Handler();
@@ -38,15 +43,18 @@ public class IntroActivity extends AppCompatActivity {
         handler.postDelayed(this::tryLogin, waitTime);
     }
 
+    /**
+     * 로그인을 시도합니다.
+     */
     private void tryLogin() {
-        LoginManager.tryLogin(this::onLoginSuccess, this::onNewUser, this::onLoginFail);
+        LoginManager.tryLogin(this, this::onSuccess, this::onNewUser, this::onFailure);
     }
 
     /**
      * 로그인에 성공한 경우.
      * 메인화면으로 이동합니다.
      */
-    private void onLoginSuccess() {
+    private void onSuccess() {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         // 다음 화면으로 이동합니다.
         startActivity(intent);
@@ -70,7 +78,19 @@ public class IntroActivity extends AppCompatActivity {
      * 로그인에 실패한 경우.
      * 로그인을 다시 시도해달라는 알림창을 한번 띄운 후, 앱을 종료합니다.
      */
-    private void onLoginFail() {
-        // TODO to be implemented.
+    private void onFailure(LoginManager.Failed failed) {
+        int messageId;
+        switch (failed) {
+            case LOGIN_FAILED:
+                messageId = R.string.intro_on_failure_login;
+                break;
+            case USER_CANCELED:
+                messageId = R.string.intro_on_failure_canceled;
+                break;
+            default:
+                messageId = R.string.common_unknown_failure;
+                break;
+        }
+        CommonAlert.show(this, messageId, this::finish);
     }
 }

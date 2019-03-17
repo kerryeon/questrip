@@ -12,7 +12,7 @@ import com.levelup.Questrip.R;
  *
  * 역할: // TODO 설계중
  */
-public class ConfigActivity extends AppCompatActivity {
+public final class ConfigActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
