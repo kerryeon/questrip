@@ -16,6 +16,9 @@ final class SignUpModel {
     private String addressDetail;
     private boolean terms;
 
+    /**
+     * 양식을 초기화합니다.
+     */
     private SignUpModel() {
         this.nickname = "";
         this.birthday = 0;
@@ -71,6 +74,9 @@ final class SignUpModel {
 
         SignUpModel model;
 
+        /**
+         * Builder 를 초기화합니다.
+         */
         Builder() {
             this.model = new SignUpModel();
         }
@@ -129,7 +135,7 @@ final class SignUpModel {
          * 완성된 양식을 반환합니다.
          * @return 완성된 양식
          */
-        final SignUpModel getResult() {
+        final SignUpModel create() {
             return this.model;
         }
 

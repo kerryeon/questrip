@@ -5,6 +5,12 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.levelup.Questrip.common.Bootstrapper;
+import com.levelup.Questrip.net.ClientPath;
+import com.levelup.Questrip.net.ClientRequest;
+import com.levelup.Questrip.net.ClientRequestAsync;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Collections;
 
@@ -27,6 +33,7 @@ public final class LoginManager {
     public enum Failed {
         LOGIN_FAILED,       // 로그인에 실패한 경우.
         USER_CANCELED,      // 사용자가 로그인을 취소한 경우.
+        NETWORK_FAILURE,    // 불안정한 네트워크.
     }
 
     /**
@@ -94,7 +101,7 @@ public final class LoginManager {
         // 이미 로그인된 사용자인지 확인합니다.
         // 이미 로그인했다면, Facebook API 에 로그인 요청을 하지 않습니다.
         if (isLoggedIn()) {
-            success.run();
+            tryLoginToServer(success, new_user, failure);
             return;
         }
 
@@ -109,8 +116,62 @@ public final class LoginManager {
      * @param failure: 로그인에 실패한 경우의 이벤트입니다.
      */
     private static void tryLoginToServer(Runnable success, Runnable new_user, OnFailure failure) {
-        // TODO to be implemented.
-        success.run();
+        ClientRequest.send(ClientPath.SIGN_IN,
+                o -> onLoginResponseSuccess(o, success, new_user, failure),
+                e -> onLoginResponseFailure(e, failure));
+    }
+
+    /**
+     * 로그인 시도가 성공하여, 그 결과를 받았을 경우의 이벤트입니다.
+     * @param object: 결과 정보.
+     * @param success: 로그인에 성공한 경우의 이벤트입니다.
+     * @param new_user: 로그인에 성공했으나, 새로운 유저인 경우의 이벤트입니다.
+     * @param failure: 응답이 잘못된 경우의 이벤트입니다.
+     */
+    private static void onLoginResponseSuccess(JSONObject object, Runnable success,
+                                               Runnable new_user, OnFailure failure) {
+        try {
+            // 로그인에 성공한 경우
+            if (object.getBoolean("sign_in")) {
+                // 회원정보를 저장한다.
+                JSONObject user_date = object.getJSONObject("data");
+                new Account.Builder()
+                        .setNickname(user_date.getString("nickname"))
+                        .setAddress(user_date.getString("address"))
+                        .setAddressDetail(user_date.getString("address_detail"))
+                        .setTerms(user_date.getBoolean("terms"))
+                        .create().setMe();
+                // 로그인이 성공했음을 알린다.
+                success.run();
+            }
+            // 회원가입이 필요한 경우
+            else if (object.getBoolean("sign_up"))
+                new_user.run();
+            // Unreachable
+            else
+                failure.run(Failed.LOGIN_FAILED);
+        } catch (JSONException e) {
+            // 응답이 깨진 경우
+            e.printStackTrace();
+            failure.run(Failed.LOGIN_FAILED);
+        }
+    }
+
+    /**
+     * 로그인 시도가 실패한 경우의 이벤트입니다.
+     * @param object: 실패 이유.
+     * @param failure: 액티비티로 넘기는 이벤트입니다.
+     */
+    private static void onLoginResponseFailure(ClientRequestAsync.Failed object,
+                                               OnFailure failure) {
+        switch (object) {
+            case INTERNAL:
+                failure.run(Failed.LOGIN_FAILED);
+                break;
+            case NETWORK_FAILURE:
+                failure.run(Failed.NETWORK_FAILURE);
+                break;
+        }
     }
 
     /**

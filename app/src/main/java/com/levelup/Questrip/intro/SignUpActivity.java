@@ -79,7 +79,7 @@ public final class SignUpActivity extends AppCompatActivity {
         else if (builder.setTerms(true))
             assertCheckField(R.string.sign_up_check_terms);
         // 모든 입력값이 정상인 경우, 정상 결과를 반환한다.
-        else return builder.getResult();
+        else return builder.create();
         // 입력값이 비정상인 경우, null 을 반환한다.
         return null;
     }

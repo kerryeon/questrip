@@ -1,12 +1,10 @@
 package com.levelup.Questrip.net;
 
-import com.levelup.Questrip.utils.LoginManager;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * 서버와 직접적으로 통신하는 클래스입니다.
+ * 서버와 통신하는 클래스입니다.
  *
  * 담당자: 김호
  *
@@ -21,33 +19,44 @@ public final class ClientRequest {
 
     /**
      * 서버에 입력값을 전송합니다.
-     * @param opCode: 어떤 전송인지를 알리는 옵코드.
+     * @param path: 서버의 요청 URI.
      * @param input: 전송할 입력값입니다.
      * @param success: 서버로부터 성공적으로 결과값을 받은 경우의 이벤트입니다.
      * @param failure: 전송에 실패한 경우의 이벤트입니다.
      */
-    public static void send(ClientOpCode opCode, final JSONObject input,
-                            OnSuccess success, OnFailure failure) {
-        JSONObject data = getData(opCode, input);
+    public static void send(String path, final JSONObject input, OnSuccess success,
+                            ClientRequestAsync.OnFailure failure) {
+        // 양식을 작성합니다.
+        ClientRequestAsync.ClientRequestFormat format =
+                new ClientRequestAsync.ClientRequestFormat(path, input);
+        // 요청을 시작합니다.
+        new ClientRequestAsync(r -> onReceivedJSON(r, success, failure), failure).execute(format);
     }
 
     /**
-     * 전송할 데이터를 가공합니다.
-     * @param opCode: 어떤 전송인지를 알리는 옵코드.
-     * @param input: 전송할 입력값입니다.
-     * @return 실질적으로 전송할 데이터입니다.
+     * 서버에 상태를 알립니다.
+     * @param path: 서버의 요청 URI.
+     * @param success: 서버로부터 성공적으로 결과값을 받은 경우의 이벤트입니다.
+     * @param failure: 전송에 실패한 경우의 이벤트입니다.
      */
-    private static JSONObject getData(ClientOpCode opCode, final JSONObject input) {
-        JSONObject data = new JSONObject();
+    public static void send(String path, OnSuccess success,
+                            ClientRequestAsync.OnFailure failure) {
+        send(path, new JSONObject(), success, failure);
+    }
+
+    /**
+     * 수신받은 값을 해석하고, 결과를 반환합니다.
+     * @param response: 수신받은 RAW 데이터
+     * @param success: 가공한 데이터를 반환합니다.
+     * @param failure: 가공에 실패한 경우의 이벤트입니다.
+     */
+    private static void onReceivedJSON(String response, OnSuccess success,
+                                ClientRequestAsync.OnFailure failure) {
         try {
-            data.put("op_code", opCode.getValue());
-            data.put("token", LoginManager.getAccessToken());
-            data.put("input", input);
+            success.run(new JSONObject(response));
         } catch (JSONException e) {
-            // 실질적으로 에러가 발생하는 경우는 없습니다.
-            e.printStackTrace();
+            failure.run(ClientRequestAsync.Failed.INTERNAL);
         }
-        return data;
     }
 
     /**
@@ -56,36 +65,12 @@ public final class ClientRequest {
      * 담당자: 김호
      */
     @FunctionalInterface
-    interface OnSuccess {
+    public interface OnSuccess {
         /**
          * 서버로부터 전달받은 결과값을 처리합니다.
-         * @param response: 결과값
+         * @param response: JSON 결과값
          */
-        void run(ClientResponse response);
-    }
-
-    /**
-     * 전송에 실패한 경우를 나열합니다.
-     *
-     * 담당자: 김호
-     */
-    enum Failed {
-        INTERNAL,
-        NETWORK_FAILURE,
-    }
-
-    /**
-     * 전송에 실패한 경우의 이벤트입니다.
-     *
-     * 담당자: 김호
-     */
-    @FunctionalInterface
-    interface OnFailure {
-        /**
-         * 전송에 실패한 경우를 처리합니다.
-         * @param failed: 전송에 실패한 이유
-         */
-        void run(Failed failed);
+        void run(JSONObject response);
     }
 
 }

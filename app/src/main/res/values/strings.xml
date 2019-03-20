@@ -17,4 +17,5 @@
     <string name="common_alert_title">알림</string>
     <string name="common_alert_confirm">확인</string>
     <string name="common_unknown_failure">알 수 없는 오류</string>
+    <string name="common_network_failure">네트워크 연결을 확인하여 다시 시도해주세요.</string>
 </resources>

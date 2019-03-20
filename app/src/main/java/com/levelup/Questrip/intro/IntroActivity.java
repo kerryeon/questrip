@@ -67,6 +67,8 @@ public final class IntroActivity extends Bootstrapper {
      * 회원가입 화면으로 이동합니다.
      */
     private void onNewUser() {
+        // TODO to be implemented.
+        // TODO 회원가입 양식으로 이동
         Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
         // 다음 화면으로 이동합니다.
         startActivity(intent);
@@ -86,6 +88,9 @@ public final class IntroActivity extends Bootstrapper {
                 break;
             case USER_CANCELED:
                 messageId = R.string.intro_on_failure_canceled;
+                break;
+            case NETWORK_FAILURE:
+                messageId = R.string.common_network_failure;
                 break;
             default:
                 messageId = R.string.common_unknown_failure;
