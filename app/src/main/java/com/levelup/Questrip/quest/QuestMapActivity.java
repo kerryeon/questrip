@@ -12,11 +12,16 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.levelup.Questrip.R;
 
 /**
- * 메인화면 액티비티입니다.
+ * 지도 위에 퀘스트를 표시해주는 액티비티입니다.
+ * 퀘스트를 한번 터치하면 해당 퀘스트에 대한 간략한 정보를 표시합니다.
+ * 퀘스트를 두번 터치하면 해당 퀘스트의 리더보드를 보여줍니다.
+ * @see com.levelup.Questrip.view.LeaderBoardActivity
+ * 한편, 상단 우측에 = 같은 모양의 버튼을 두어, 환경설정 액티비티로 이동할 수 있게 합니다.
  *
  * 담당자: 이동욱, 구본근
  *
- * 역할: // TODO 설계중
+ * 역할: 지도 위에 퀘스트를 표시합니다.
+ * 퀘스트는 MarkerManager 를 통해 표시합니다.
  */
 public final class QuestMapActivity extends FragmentActivity implements OnMapReadyCallback {
 

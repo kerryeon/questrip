@@ -4,6 +4,7 @@ import com.facebook.AccessToken;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
+import com.levelup.Questrip.data.Account;
 import com.levelup.Questrip.net.ClientPath;
 import com.levelup.Questrip.net.ClientRequest;
 import com.levelup.Questrip.net.ClientRequestAsync;

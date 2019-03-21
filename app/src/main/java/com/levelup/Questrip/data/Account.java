@@ -1,4 +1,4 @@
-package com.levelup.Questrip.common;
+package com.levelup.Questrip.data;
 
 /**
  * 로그인한 사용자의 회원정보를 담고 있는 클래스입니다.
@@ -15,7 +15,7 @@ public final class Account {
     private String nickname;
     private long birthday;
     private String address;
-    private String address_detail;
+    private String addressDetail;
     private boolean terms;
 
     /**
@@ -29,8 +29,9 @@ public final class Account {
     /**
      * 사용자 정보를 저장합니다.
      */
-    void setInstance() {
+    public Account setInstance() {
         me = this;
+        return this;
     }
 
     /**
@@ -62,8 +63,8 @@ public final class Account {
      * 사용자의 세부주소 정보를 가져옵니다.
      * @return 사용자의 세부주소
      */
-    public final String getAddress_detail() {
-        return address_detail;
+    public final String getAddressDetail() {
+        return addressDetail;
     }
 
     /**
@@ -80,21 +81,21 @@ public final class Account {
     private Account() {
         nickname = "";
         address = "";
-        address_detail = "";
+        addressDetail = "";
         terms = false;
     }
 
     /**
      * 사용자 정보에 필요한 양식을 만들어주는 Builder 입니다.
      */
-    static class Builder {
+    public static class Builder {
 
         private Account account;
 
         /**
          * Builder 를 초기화합니다.
          */
-        Builder() {
+        public Builder() {
             account = new Account();
         }
 
@@ -103,7 +104,7 @@ public final class Account {
          * @param value: 닉네임
          * @return Builder
          */
-        Builder setNickname(String value) {
+        public Builder setNickname(String value) {
             account.nickname = value;
             return this;
         }
@@ -114,7 +115,7 @@ public final class Account {
          * @param value: 생년월일
          * @return Builder
          */
-        Builder setBirthday(long value) {
+        public Builder setBirthday(long value) {
             account.birthday = value;
             return this;
         }
@@ -124,7 +125,7 @@ public final class Account {
          * @param value: 집주소
          * @return Builder
          */
-        Builder setAddress(String value) {
+        public Builder setAddress(String value) {
             account.address = value;
             return this;
         }
@@ -134,8 +135,8 @@ public final class Account {
          * @param value: 세부주소
          * @return Builder
          */
-        Builder setAddressDetail(String value) {
-            account.address_detail = value;
+        public Builder setAddressDetail(String value) {
+            account.addressDetail = value;
             return this;
         }
 
@@ -144,7 +145,7 @@ public final class Account {
          * @param value: 약관 동의 여부
          * @return Builder
          */
-        Builder setTerms(boolean value) {
+        public Builder setTerms(boolean value) {
             account.terms = value;
             return this;
         }
@@ -153,7 +154,7 @@ public final class Account {
          * 완성된 사용자 정보를 반환합니다.
          * @return 사용자 정보
          */
-        final Account create() {
+        public final Account create() {
             return account;
         }
 

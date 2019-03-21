@@ -5,7 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.levelup.Questrip.R;
+import com.levelup.Questrip.data.Account;
 import com.levelup.Questrip.common.CommonAlert;
+import com.levelup.Questrip.net.ClientRequestAsync;
 import com.levelup.Questrip.quest.QuestMapActivity;
 
 /**
@@ -34,6 +36,10 @@ public final class SignUpActivity extends AppCompatActivity {
      * "가입" 버튼을 통해 회원가입을 시도합니다.
      */
     private void onSignUp() {
+        final Account account = getFields();
+        // 입력값에 오류가 있는 경우, 가입 절차를 진행하지 않습니다.
+        if (account == null) return;
+        // 입력값에 문제가 없는 경우, 가입 절차를 계속 진행합니다.
         SignUpManager.trySignUp(getFields(), this::onSuccess, this::onFailure);
     }
 
@@ -52,8 +58,8 @@ public final class SignUpActivity extends AppCompatActivity {
      * 회원가입에 실패했을 경우의 이벤트입니다.
      * @param failed: 실패 사유
      */
-    private void onFailure(SignUpManager.Failed failed) {
-        // TODO to be implemented.
+    private void onFailure(ClientRequestAsync.Failed failed) {
+        CommonAlert.failed(this, failed);
     }
 
     /**
@@ -61,27 +67,82 @@ public final class SignUpActivity extends AppCompatActivity {
      * @return 입력값이 정상인 경우, 정상적인 필드를 반환합니다.
      * 입력값이 비정상인 경우, null 을 반환합니다.
      */
-    private SignUpModel getFields() {
-        SignUpModel.Builder builder = new SignUpModel.Builder();
+    private Account getFields() {
+        Account.Builder builder = new Account.Builder();
         // 닉네임
-        if (builder.setNickname("nickname"))
+        if (setNickname(builder))
             assertCheckField(R.string.sign_up_check_nickname);
         // 생년월일
-        else if (builder.setBirthday(19980904))
+        else if (setBirthday(builder))
             assertCheckField(R.string.sign_up_check_birthday);
         // 주소
-        else if (builder.setAddress("경남 진주시 진주대로 501"))
+        else if (setAddress(builder))
             assertCheckField(R.string.sign_up_check_address);
         // 세부주소
-        else if (builder.setAddressDetail("30동 308호"))
+        else if (setAddressDetail(builder))
             assertCheckField(R.string.sign_up_check_address);
         // 약관
-        else if (builder.setTerms(true))
+        else if (setTerms(builder))
             assertCheckField(R.string.sign_up_check_terms);
-        // 모든 입력값이 정상인 경우, 정상 결과를 반환한다.
-        else return builder.create();
+        // 모든 입력값이 정상인 경우, 결과값을 저장한 후 반환한다.
+        else return builder.create().setInstance();
         // 입력값이 비정상인 경우, null 을 반환한다.
         return null;
+    }
+
+    /**
+     * 닉네임을 검사한 후 가져옵니다.
+     * @param builder 회원가입 양식
+     * @return 입력값에 문제가 있으면 true 를 반환합니다.
+     */
+    private boolean setNickname(Account.Builder builder) {
+        String value = "Test User";
+        builder.setNickname(value);
+        return false;
+    }
+
+    /**
+     * 생년월일을 검사한 후 가져옵니다.
+     * 생년월일은 반드시 yyyyMMdd 형식이어야 합니다.
+     * @param builder 회원가입 양식
+     * @return 입력값에 문제가 있으면 true 를 반환합니다.
+     */
+    private boolean setBirthday(Account.Builder builder) {
+        long value = 19870123;
+        builder.setBirthday(value);
+        return false;
+    }
+
+    /**
+     * 집주소를 검사한 후 가져옵니다.
+     * @param builder 회원가입 양식
+     * @return 입력값에 문제가 있으면 true 를 반환합니다.
+     */
+    private boolean setAddress(Account.Builder builder) {
+        String value = "경남 진주시 진주대로 501";
+        builder.setAddress(value);
+        return false;
+    }
+
+    /**
+     * 세부주소를 검사한 후 가져옵니다.
+     * @param builder 회원가입 양식
+     * @return 입력값에 문제가 있으면 true 를 반환합니다.
+     */
+    private boolean setAddressDetail(Account.Builder builder) {
+        String value = "30-308";
+        builder.setAddressDetail(value);
+        return false;
+    }
+
+    /**
+     * 약관 동의 여부를 검사한 후 가져옵니다.
+     * @param builder 회원가입 양식
+     * @return 입력값에 문제가 있으면 true 를 반환합니다.
+     */
+    private boolean setTerms(Account.Builder builder) {
+        builder.setTerms(true);
+        return false;
     }
 
     /**

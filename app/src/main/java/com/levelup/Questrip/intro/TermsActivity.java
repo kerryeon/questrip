@@ -12,7 +12,7 @@ import com.levelup.Questrip.R;
  * 담당자: 이동욱, 구본근
  *
  * 역할: 약관을 보여줍니다.
- * "확인" 버튼을 만들어, 약관을 다 읽었음을 알려야 합니다.
+ * "동의"한다는 체크박스를 만들어, 약관을 다 읽었음을 알려야 합니다.
  */
 public final class TermsActivity extends AppCompatActivity {
 

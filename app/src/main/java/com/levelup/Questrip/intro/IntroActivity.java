@@ -98,10 +98,10 @@ public final class IntroActivity extends Bootstrapper {
                 messageId = R.string.intro_on_failure_canceled;
                 break;
             case NETWORK_FAILURE:
-                messageId = R.string.common_network_failure;
+                messageId = R.string.common_failure_network;
                 break;
             default:
-                messageId = R.string.common_unknown_failure;
+                messageId = R.string.common_failure_unknown;
                 break;
         }
         CommonAlert.show(this, messageId, this::finish);

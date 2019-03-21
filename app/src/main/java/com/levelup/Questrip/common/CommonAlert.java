@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.app.AlertDialog;
 
 import com.levelup.Questrip.R;
+import com.levelup.Questrip.net.ClientRequestAsync;
 
 /**
  * 일반적인 알림창을 띄워주는 클래스입니다.
@@ -87,6 +88,29 @@ public final class CommonAlert {
                 dialog -> onDenied.run()
         );
         builder.create().show();
+    }
+
+    /**
+     * 서버로부터 긍정적인 응답이 오지 않은 경우, 그 이유를 사용자에게 알립니다.
+     * @param context: 현재 액티비티
+     * @param failed: 실패 이유.
+     * [예시]는 다음과 같습니다.
+     *
+     */
+    public static void failed(Context context, ClientRequestAsync.Failed failed) {
+        int messageId;
+        switch (failed) {
+            case INTERNAL:
+                messageId = R.string.common_failure_internal;
+                break;
+            case NETWORK_FAILURE:
+                messageId = R.string.common_failure_internal;
+                break;
+            default:
+                messageId = R.string.common_failure_unknown;
+                break;
+        }
+        show(context, messageId, () -> {});
     }
 
 }
