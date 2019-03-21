@@ -1,0 +1,19 @@
+<!---
+이것은 임시로고 입니다. 로고는 완성되는데로 바로 반영하도록 하겠습니다.
+-->
+<vector android:height="284dp" android:viewportHeight="283.5"
+    android:viewportWidth="283.5" android:width="284dp"
+    xmlns:aapt="http://schemas.android.com/aapt" xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillColor="#00000000"
+        android:pathData="M42.1,142a99.6,102.6 0,1 0,199.2 0a99.6,102.6 0,1 0,-199.2 0z" android:strokeWidth="77">
+        <aapt:attr name="android:strokeColor">
+            <gradient android:endX="279.8594" android:endY="141.9534"
+                android:startX="3.6051" android:startY="141.9534" android:type="linear">
+                <item android:color="#00FF6F61" android:offset="0"/>
+                <item android:color="#FFF97366" android:offset="0.241"/>
+                <item android:color="#FFFB7164" android:offset="0.395"/>
+                <item android:color="#FFFF6F61" android:offset="1"/>
+            </gradient>
+        </aapt:attr>
+    </path>
+</vector>
