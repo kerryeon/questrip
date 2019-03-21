@@ -1,4 +1,4 @@
-package com.levelup.Questrip.utils;
+package com.levelup.Questrip.common;
 
 /**
  * 로그인한 사용자의 회원정보를 담고 있는 클래스입니다.
@@ -13,6 +13,7 @@ public final class Account {
     private static Account me;
 
     private String nickname;
+    private long birthday;
     private String address;
     private String address_detail;
     private boolean terms;
@@ -28,7 +29,7 @@ public final class Account {
     /**
      * 사용자 정보를 저장합니다.
      */
-    void setMe() {
+    void setInstance() {
         me = this;
     }
 
@@ -38,6 +39,15 @@ public final class Account {
      */
     public final String getNickname() {
         return nickname;
+    }
+
+    /**
+     * 사용자의 생년월일을 가져옵니다.
+     * 생년월일은 yyyyMMdd 형식으로 출력합니다.
+     * @return 사용자의 생년월일
+     */
+    public final long getBirthday() {
+        return birthday;
     }
 
     /**
@@ -95,6 +105,17 @@ public final class Account {
          */
         Builder setNickname(String value) {
             account.nickname = value;
+            return this;
+        }
+
+        /**
+         * 생년월일을 설정합니다.
+         * yyyyMMdd 형식으로 입력해야 합니다.
+         * @param value: 생년월일
+         * @return Builder
+         */
+        Builder setBirthday(long value) {
+            account.birthday = value;
             return this;
         }
 

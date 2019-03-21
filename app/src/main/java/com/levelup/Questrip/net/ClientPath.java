@@ -6,4 +6,7 @@ public final class ClientPath {
     public static String SIGN_IN = "/sign/in";
     public static String SIGN_UP = "/sign/up";
 
+    // explore
+    public static String MAP = "/me/quest";
+
 }

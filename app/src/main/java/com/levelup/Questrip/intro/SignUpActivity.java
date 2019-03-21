@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import com.levelup.Questrip.R;
 import com.levelup.Questrip.common.CommonAlert;
-import com.levelup.Questrip.explore.MainActivity;
+import com.levelup.Questrip.quest.QuestMapActivity;
 
 /**
  * 회원가입 화면 액티비티입니다.
@@ -41,7 +41,7 @@ public final class SignUpActivity extends AppCompatActivity {
      * 회원가입에 성공했을 경우의 이벤트입니다.
      */
     private void onSuccess() {
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        Intent intent = new Intent(getApplicationContext(), QuestMapActivity.class);
         // 다음 화면으로 이동합니다.
         startActivity(intent);
         // 회원가입 화면은 종료합니다.

@@ -1,4 +1,4 @@
-package com.levelup.Questrip.utils;
+package com.levelup.Questrip.common;
 
 /**
  * 사용자의 집주소를 불러오는 프로세스를 담당하는 클래스입니다.

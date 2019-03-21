@@ -7,8 +7,8 @@ import android.os.Bundle;
 import com.levelup.Questrip.R;
 import com.levelup.Questrip.common.Bootstrapper;
 import com.levelup.Questrip.common.CommonAlert;
-import com.levelup.Questrip.explore.MainActivity;
-import com.levelup.Questrip.utils.LoginManager;
+import com.levelup.Questrip.quest.QuestMapActivity;
+import com.levelup.Questrip.common.LoginManager;
 
 /**
  * 인트로 화면 액티비티입니다.
@@ -34,13 +34,21 @@ public final class IntroActivity extends Bootstrapper {
     }
 
     /**
-     * 로고를 잠시 보여주고, 로그인을 시도합니다.
+     * 로고를 잠시 보여주고, 권한 획득을 시도합니다.
      */
     private void waitAndPass() {
         // 이벤트 핸들러
         Handler handler = new Handler();
         // 인트로를 지정한 시간만큼 보여줍니다.
-        handler.postDelayed(this::tryLogin, waitTime);
+        handler.postDelayed(this::requirePermission, waitTime);
+    }
+
+    /**
+     * 필요한 권한을 모두 획득하였다면 로그인을 시도합니다.
+     */
+    @Override
+    protected void onPermissionsGranted() {
+        tryLogin();
     }
 
     /**
@@ -55,7 +63,7 @@ public final class IntroActivity extends Bootstrapper {
      * 메인화면으로 이동합니다.
      */
     private void onSuccess() {
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        Intent intent = new Intent(getApplicationContext(), QuestMapActivity.class);
         // 다음 화면으로 이동합니다.
         startActivity(intent);
         // 인트로 화면은 종료합니다.

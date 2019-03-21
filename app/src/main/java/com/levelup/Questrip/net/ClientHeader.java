@@ -1,6 +1,6 @@
 package com.levelup.Questrip.net;
 
-import com.levelup.Questrip.utils.LoginManager;
+import com.levelup.Questrip.common.LoginManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;

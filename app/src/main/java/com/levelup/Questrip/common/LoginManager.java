@@ -1,10 +1,9 @@
-package com.levelup.Questrip.utils;
+package com.levelup.Questrip.common;
 
 import com.facebook.AccessToken;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
-import com.levelup.Questrip.common.Bootstrapper;
 import com.levelup.Questrip.net.ClientPath;
 import com.levelup.Questrip.net.ClientRequest;
 import com.levelup.Questrip.net.ClientRequestAsync;
@@ -140,7 +139,7 @@ public final class LoginManager {
                         .setAddress(user_date.getString("address"))
                         .setAddressDetail(user_date.getString("address_detail"))
                         .setTerms(user_date.getBoolean("terms"))
-                        .create().setMe();
+                        .create().setInstance();
                 // 로그인이 성공했음을 알린다.
                 success.run();
             }
