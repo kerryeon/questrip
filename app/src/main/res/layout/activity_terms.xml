@@ -4,6 +4,55 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg"
     tools:context=".intro.TermsActivity">
+
+    <!---
+    필드는 기본 palatte로 구성되어있습니다. 디자인한 UI가 적용되는데로 반영하겠습니다.
+    (UI는 material design으로 적용될 예정입니다)
+    -->
+
+    <!-- 약관 TextView -->
+    <TextView
+        android:id="@+id/terms_view"
+        android:layout_width="260dp"
+        android:layout_height="250dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="192dp"
+        android:layout_marginEnd="8dp"
+        android:text="약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다약관이다'"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- 동의 CheckBox -->
+    <CheckBox
+        android:id="@+id/agree_check"
+        android:layout_width="260dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="160dp"
+        android:text="동의"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- 로고 -->
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="82dp"
+        android:layout_height="88dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo" />
 
 </android.support.constraint.ConstraintLayout>
