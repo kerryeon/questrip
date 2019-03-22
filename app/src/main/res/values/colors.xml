@@ -2,5 +2,8 @@
 <resources>
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorAccent">#ff6f61</color>
+    <color name="bg">#F8F8F8</color>        <!-- 배경 색깔 -->
+    <color name="bg_dark">#B3B3B3</color>   <!-- 상태표시줄 색깔 -->
+    <color name="living_coral">#FF6F61</color> <!-- Questrip 테마 색깔 -->
 </resources>
