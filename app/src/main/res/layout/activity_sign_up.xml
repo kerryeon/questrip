@@ -95,6 +95,7 @@
             android:ems="10"
             android:hint="@string/sign_up_field_address"
             android:inputType="textPersonName"
+            android:onClick="ClickAddress"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/sign_up_month" />

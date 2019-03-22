@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.levelup.Questrip.R;
+import com.levelup.Questrip.common.AddressManager;
 import com.levelup.Questrip.data.Account;
 import com.levelup.Questrip.common.CommonAlert;
 
@@ -26,10 +28,36 @@ import com.levelup.Questrip.common.CommonAlert;
  */
 public final class SignUpActivity extends AppCompatActivity {
 
+    // 주소값을 가지는 Edit 박스를 지정하기 위한 변수
+    private EditText address;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
+        //주소를 받는 Edit박스 지정
+        address =(EditText) findViewById(R.id.sign_up_address);
+    }
+
+    public void ClickAddress(View v)
+    {
+        Intent intent = new Intent(this, AddressActivity.class);
+        startActivityForResult(intent,3000);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        if(resultCode == RESULT_OK){
+            switch (requestCode){
+                // MainActivity 에서 요청할 때 보낸 요청 코드 (3000)
+                case 3000:
+                    //사용자가 선택한 주소를 가져와서 주소에 해당하는 Edit박스에 값을 넣어줌
+                    AddressManager Addr = (AddressManager) data.getSerializableExtra("class");
+                    address.setText(Addr.getAddress());
+                    break;
+            }
+        }
     }
 
     /**
