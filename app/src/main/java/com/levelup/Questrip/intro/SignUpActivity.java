@@ -3,12 +3,12 @@ package com.levelup.Questrip.intro;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import com.levelup.Questrip.R;
 import com.levelup.Questrip.data.Account;
 import com.levelup.Questrip.common.CommonAlert;
-import com.levelup.Questrip.net.ClientRequestAsync;
-import com.levelup.Questrip.quest.QuestMapActivity;
 
 /**
  * 회원가입 화면 액티비티입니다.
@@ -33,33 +33,15 @@ public final class SignUpActivity extends AppCompatActivity {
     }
 
     /**
-     * "가입" 버튼을 통해 회원가입을 시도합니다.
+     * "다음" 버튼을 통해 약관 동의 화면으로 넘어갑니다.
      */
-    private void onSignUp() {
-        final Account account = getFields();
-        // 입력값에 오류가 있는 경우, 가입 절차를 진행하지 않습니다.
-        if (account == null) return;
-        // 입력값에 문제가 없는 경우, 가입 절차를 계속 진행합니다.
-        SignUpManager.trySignUp(getFields(), this::onSuccess, this::onFailure);
-    }
-
-    /**
-     * 회원가입에 성공했을 경우의 이벤트입니다.
-     */
-    private void onSuccess() {
-        Intent intent = new Intent(getApplicationContext(), QuestMapActivity.class);
-        // 다음 화면으로 이동합니다.
+    public void onNextStep(View view) {
+        Intent intent = new Intent(getApplicationContext(), TermsActivity.class);
+        Account.Builder builder = getFields();
+        // 모든 입력값이 정상이면 다음 과정으로 이동합니다.
+        if (builder == null) return;
+        intent.putExtra("fields", builder);
         startActivity(intent);
-        // 회원가입 화면은 종료합니다.
-        finish();
-    }
-
-    /**
-     * 회원가입에 실패했을 경우의 이벤트입니다.
-     * @param failed: 실패 사유
-     */
-    private void onFailure(ClientRequestAsync.Failed failed) {
-        CommonAlert.failed(this, failed);
     }
 
     /**
@@ -67,7 +49,7 @@ public final class SignUpActivity extends AppCompatActivity {
      * @return 입력값이 정상인 경우, 정상적인 필드를 반환합니다.
      * 입력값이 비정상인 경우, null 을 반환합니다.
      */
-    private Account getFields() {
+    private Account.Builder getFields() {
         Account.Builder builder = new Account.Builder();
         // 닉네임
         if (setNickname(builder))
@@ -81,11 +63,8 @@ public final class SignUpActivity extends AppCompatActivity {
         // 세부주소
         else if (setAddressDetail(builder))
             assertCheckField(R.string.sign_up_check_address);
-        // 약관
-        else if (setTerms(builder))
-            assertCheckField(R.string.sign_up_check_terms);
         // 모든 입력값이 정상인 경우, 결과값을 저장한 후 반환한다.
-        else return builder.create().setInstance();
+        else return builder;
         // 입력값이 비정상인 경우, null 을 반환한다.
         return null;
     }
@@ -96,7 +75,7 @@ public final class SignUpActivity extends AppCompatActivity {
      * @return 입력값에 문제가 있으면 true 를 반환합니다.
      */
     private boolean setNickname(Account.Builder builder) {
-        String value = "Test User";
+        String value = ((TextView) findViewById(R.id.sign_up_nickname)).getText().toString();
         builder.setNickname(value);
         return false;
     }
@@ -119,7 +98,7 @@ public final class SignUpActivity extends AppCompatActivity {
      * @return 입력값에 문제가 있으면 true 를 반환합니다.
      */
     private boolean setAddress(Account.Builder builder) {
-        String value = "경남 진주시 진주대로 501";
+        String value = ((TextView) findViewById(R.id.sign_up_address)).getText().toString();
         builder.setAddress(value);
         return false;
     }
@@ -130,18 +109,8 @@ public final class SignUpActivity extends AppCompatActivity {
      * @return 입력값에 문제가 있으면 true 를 반환합니다.
      */
     private boolean setAddressDetail(Account.Builder builder) {
-        String value = "30-308";
+        String value = ((TextView) findViewById(R.id.sign_up_address_detail)).getText().toString();
         builder.setAddressDetail(value);
-        return false;
-    }
-
-    /**
-     * 약관 동의 여부를 검사한 후 가져옵니다.
-     * @param builder 회원가입 양식
-     * @return 입력값에 문제가 있으면 true 를 반환합니다.
-     */
-    private boolean setTerms(Account.Builder builder) {
-        builder.setTerms(true);
         return false;
     }
 
@@ -151,6 +120,14 @@ public final class SignUpActivity extends AppCompatActivity {
      */
     private void assertCheckField(int messageId) {
         CommonAlert.show(this, messageId, this::finish);
+    }
+
+    /**
+     * 뒤로가기 버튼을 누른 경우, 앱을 종료할 것인지 물어봅니다.
+     */
+    @Override
+    public void onBackPressed() {
+        CommonAlert.closeApp(this);
     }
 
 }

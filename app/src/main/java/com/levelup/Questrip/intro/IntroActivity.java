@@ -75,8 +75,6 @@ public final class IntroActivity extends Bootstrapper {
      * 회원가입 화면으로 이동합니다.
      */
     private void onNewUser() {
-        // TODO to be implemented.
-        // TODO 회원가입 양식으로 이동
         Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
         // 다음 화면으로 이동합니다.
         startActivity(intent);
@@ -104,6 +102,6 @@ public final class IntroActivity extends Bootstrapper {
                 messageId = R.string.common_failure_unknown;
                 break;
         }
-        CommonAlert.show(this, messageId, this::finish);
+        CommonAlert.show(this, messageId, this::finishAndRemoveTask);
     }
 }

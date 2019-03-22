@@ -137,6 +137,7 @@ public final class LoginManager {
                 JSONObject user_date = object.getJSONObject("data");
                 new Account.Builder()
                         .setNickname(user_date.getString("nickname"))
+                        .setBirthday(user_date.getLong("birthday"))
                         .setAddress(user_date.getString("address"))
                         .setAddressDetail(user_date.getString("address_detail"))
                         .setTerms(user_date.getBoolean("terms"))

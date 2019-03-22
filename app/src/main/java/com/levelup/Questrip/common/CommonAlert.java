@@ -1,5 +1,6 @@
 package com.levelup.Questrip.common;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v7.app.AlertDialog;
 
@@ -44,6 +45,8 @@ public final class CommonAlert {
      * @param messageId: 메세지 ID.
      * @param onConfirm: "예" 버튼을 누르면 실행되는 이벤트입니다.
      * @param onDenied: "아니오" 버튼을 누르면 실행되는 이벤트입니다.
+     * [예시]는 다음과 같습니다.
+     * @see #closeApp(Activity)
      */
     public static void show(Context context, int messageId, Runnable onConfirm, Runnable onDenied) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -95,7 +98,7 @@ public final class CommonAlert {
      * @param context: 현재 액티비티
      * @param failed: 실패 이유.
      * [예시]는 다음과 같습니다.
-     *
+     * @see com.levelup.Questrip.intro.TermsActivity#onFailure(ClientRequestAsync.Failed)
      */
     public static void failed(Context context, ClientRequestAsync.Failed failed) {
         int messageId;
@@ -111,6 +114,18 @@ public final class CommonAlert {
                 break;
         }
         show(context, messageId, () -> {});
+    }
+
+    /**
+     * 사용자에게 앱을 종료할 것인지 물어봅니다.
+     * @param context: 현재 액티비티
+     * [예시]는 다음과 같습니다.
+     * @see com.levelup.Questrip.intro.SignUpActivity#onBackPressed()
+     * @see com.levelup.Questrip.quest.QuestMapActivity#onBackPressed()
+     */
+    public static void closeApp(Activity context) {
+        show(context, R.string.common_alert_field_close_app,
+                context::finishAndRemoveTask, () -> {});
     }
 
 }

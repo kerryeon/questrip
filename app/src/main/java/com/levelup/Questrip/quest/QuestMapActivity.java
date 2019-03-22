@@ -10,6 +10,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.levelup.Questrip.R;
+import com.levelup.Questrip.common.CommonAlert;
 
 /**
  * 지도 위에 퀘스트를 표시해주는 액티비티입니다.
@@ -51,4 +52,13 @@ public final class QuestMapActivity extends FragmentActivity implements OnMapRea
         googleMap.addMarker(new MarkerOptions().position(city).title("Marker in Jinju"));
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(city));
     }
+
+    /**
+     * 뒤로가기 버튼을 누른 경우, 앱을 종료할 것인지 물어봅니다.
+     */
+    @Override
+    public void onBackPressed() {
+        CommonAlert.closeApp(this);
+    }
+
 }

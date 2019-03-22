@@ -114,4 +114,12 @@ public abstract class Bootstrapper extends AppCompatActivity {
         if (grantResults.length > 0 && permissionManager.isGranted()) onPermissionsGranted();
     }
 
+    /**
+     * 뒤로가기 버튼을 누른 경우, 앱을 종료합니다.
+     */
+    @Override
+    public void onBackPressed() {
+        finishAndRemoveTask();
+    }
+
 }

@@ -1,5 +1,7 @@
 package com.levelup.Questrip.data;
 
+import java.io.Serializable;
+
 /**
  * 로그인한 사용자의 회원정보를 담고 있는 클래스입니다.
  *
@@ -8,7 +10,7 @@ package com.levelup.Questrip.data;
  * 역할: 사용자의 정보를 담당합니다.
  * Account.getInstance() 를 통하여 사용자의 정보를 불러올 수 있습니다.
  */
-public final class Account {
+public final class Account implements Serializable {
 
     private static Account me;
 
@@ -88,7 +90,7 @@ public final class Account {
     /**
      * 사용자 정보에 필요한 양식을 만들어주는 Builder 입니다.
      */
-    public static class Builder {
+    public static class Builder implements Serializable {
 
         private Account account;
 

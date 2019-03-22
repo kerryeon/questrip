@@ -7,129 +7,124 @@
     android:background="@color/bg"
     tools:context=".intro.SignUpActivity">
 
-    <!---
-    필드는 기본 palatte로 구성되어있습니다. 디자인한 UI가 적용되는데로 반영하겠습니다.
-    (UI는 material design으로 적용될 예정입니다)
-    -->
-
-    <!-- 환영 TextView -->
     <TextView
         android:id="@+id/welcome"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginStart="66dp"
-        android:layout_marginTop="92dp"
-        android:layout_marginEnd="66dp"
-        android:text="환영합니다!"
+        android:layout_marginTop="108dp"
+        android:text="@string/sign_up_field_welcome"
         android:textColor="@color/living_coral"
-        android:textSize="50dp"
+        android:textSize="50sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.484"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- 닉네임 EditText -->
-    <EditText
-        android:id="@+id/nickname"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="327dp"
-        android:ems="10"
-        android:hint="닉네임"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="80dp"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/welcome" />
+        app:layout_constraintTop_toBottomOf="@+id/welcome">
 
-    <!-- 생년월일(연도) EditText -->
-    <EditText
-        android:id="@+id/year"
-        android:layout_width="72dp"
-        android:layout_height="41dp"
-        android:layout_marginStart="96dp"
-        android:layout_marginTop="36dp"
-        android:ems="10"
-        android:hint="년"
-        android:inputType="date"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nickname" />
+        <EditText
+            android:id="@+id/sign_up_nickname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/sign_up_field_nickname"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/welcome" />
 
-    <!-- 생년월일(월) EditText -->
-    <EditText
-        android:id="@+id/month"
-        android:layout_width="72dp"
-        android:layout_height="41dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:ems="10"
-        android:hint="월"
-        android:inputType="date"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/nickname"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="@+id/nickname"
-        app:layout_constraintTop_toTopOf="@+id/nickname"
-        app:layout_constraintVertical_bias="0.193" />
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sign_up_nickname">
 
-    <!-- 생년월일(일) EditText -->
-    <EditText
-        android:id="@+id/day"
-        android:layout_width="72dp"
-        android:layout_height="41dp"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="96dp"
-        android:ems="10"
-        android:hint="일"
-        android:inputType="date"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nickname" />
+            <EditText
+                android:id="@+id/sign_up_year"
+                android:layout_width="72dp"
+                android:layout_height="41dp"
+                android:ems="10"
+                android:hint="@string/sign_up_field_year"
+                android:inputType="date"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sign_up_nickname" />
 
-    <!-- 생년월일(주소) EditText -->
-    <EditText
-        android:id="@+id/addr"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="8dp"
-        android:ems="10"
-        android:hint="주소"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/month" />
+            <EditText
+                android:id="@+id/sign_up_month"
+                android:layout_width="72dp"
+                android:layout_height="41dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:ems="10"
+                android:hint="@string/sign_up_field_month"
+                android:inputType="date"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/sign_up_nickname"
+                app:layout_constraintHorizontal_bias="0.496"
+                app:layout_constraintStart_toStartOf="@+id/sign_up_nickname"
+                app:layout_constraintTop_toTopOf="@+id/sign_up_nickname"
+                app:layout_constraintVertical_bias="0.193" />
 
-    <!-- 생년월일(상세주소) EditText -->
-    <EditText
-        android:id="@+id/detail_addr"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="8dp"
-        android:ems="10"
-        android:hint="상세주소"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addr" />
+            <EditText
+                android:id="@+id/sign_up_day"
+                android:layout_width="72dp"
+                android:layout_height="41dp"
+                android:ems="10"
+                android:hint="@string/sign_up_field_day"
+                android:inputType="date"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sign_up_nickname" />
+        </LinearLayout>
 
-    <!-- 다음 Button -->
+        <EditText
+            android:id="@+id/sign_up_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:ems="10"
+            android:hint="@string/sign_up_field_address"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sign_up_month" />
+
+        <EditText
+            android:id="@+id/sign_up_address_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:ems="10"
+            android:hint="@string/sign_up_field_address_detail"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sign_up_address" />
+
+    </LinearLayout>
+
     <Button
-        android:id="@+id/next_button"
+        android:id="@+id/sign_up_btn_next"
         android:layout_width="84dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
         android:background="@color/living_coral"
-        android:text="다음"
+        android:onClick="onNextStep"
+        android:text="@string/common_alert_button_next"
         android:textColor="#ffffff"
-        android:textSize="17dp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.942"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

@@ -112,7 +112,7 @@ final class PermissionManager {
      * "확인" 버튼을 누르면 앱을 종료합니다.
      */
     private void onDeniedGetPermission() {
-        CommonAlert.show(activity, R.string.permission_denied, activity::finish);
+        CommonAlert.show(activity, R.string.permission_denied, activity::finishAndRemoveTask);
     }
 
 }
