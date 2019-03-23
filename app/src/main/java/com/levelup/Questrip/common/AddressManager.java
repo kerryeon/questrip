@@ -1,5 +1,7 @@
 package com.levelup.Questrip.common;
 
+import java.io.Serializable;
+
 /**
  * 사용자의 집주소를 불러오는 프로세스를 담당하는 클래스입니다.
  *
@@ -10,7 +12,21 @@ package com.levelup.Questrip.common;
  * 예제는 다음과 같습니다.
  * @see <a href="http://dailyddubby.blogspot.com/2018/02/2-api.html" />
  */
-final class AddressManager {
+public final class AddressManager implements Serializable {
+    private String Address;
+
+    public AddressManager() { }
+
+    public AddressManager(String address){
+        this.Address = address;
+    }
+
+    public String getAddress(){
+        return Address;
+    }
+    public void setAddress(String address) {
+        this.Address = address;
+    }
 
     /**
      * 집주소를 불러오는 데에 성공한 경우의 이벤트입니다.
@@ -32,6 +48,7 @@ final class AddressManager {
      * @param failure: 주소를 얻지 못했을 경우의 이벤트입니다.
      */
     static void tryGetAddress(OnSuccess success, Runnable failure) {
+
         // TODO to be implemented.
         failure.run();
     }
