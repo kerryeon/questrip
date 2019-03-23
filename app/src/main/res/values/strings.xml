@@ -30,6 +30,7 @@
     <!-- Common -->
     <string name="common_alert_title">알림</string>
     <string name="common_alert_confirm">확인</string>
+    <string name="common_alert_cancel">취소</string>
     <string name="common_alert_choose_yes">예</string>
     <string name="common_alert_choose_no">아니오</string>
     <string name="common_alert_button_next">다음</string>

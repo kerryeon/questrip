@@ -8,7 +8,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.levelup.Questrip.R;
-import com.levelup.Questrip.common.AddressManager;
 import com.levelup.Questrip.data.Account;
 import com.levelup.Questrip.common.CommonAlert;
 
@@ -28,36 +27,42 @@ import com.levelup.Questrip.common.CommonAlert;
  */
 public final class SignUpActivity extends AppCompatActivity {
 
-    // 주소값을 가지는 Edit 박스를 지정하기 위한 변수
-    private EditText address;
+    // 각종 값을 입력할 수 있는 필드
+    private EditText mNickname;
+    private EditText mDateYear;
+    private EditText mDateMonth;
+    private EditText mDateDay;
+    private EditText mAddress;
+    private EditText mAddressDetail;
+
+    // 형식을 갖춘 값
+    private long date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-
-        //주소를 받는 Edit박스 지정
-        address =(EditText) findViewById(R.id.sign_up_address);
+        init();
     }
 
-    public void ClickAddress(View v)
-    {
-        Intent intent = new Intent(this, AddressActivity.class);
-        startActivityForResult(intent,3000);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        if(resultCode == RESULT_OK){
-            switch (requestCode){
-                // MainActivity 에서 요청할 때 보낸 요청 코드 (3000)
-                case 3000:
-                    //사용자가 선택한 주소를 가져와서 주소에 해당하는 Edit박스에 값을 넣어줌
-                    AddressManager Addr = (AddressManager) data.getSerializableExtra("class");
-                    address.setText(Addr.getAddress());
-                    break;
-            }
-        }
+    /**
+     * 각종 변수 및 상태를 초기화합니다.
+     */
+    private void init() {
+        // 변수를 초기화합니다.
+        date = 0;
+        // 필드를 가져옵니다.
+        mNickname = findViewById(R.id.sign_up_nickname);
+        mDateYear = findViewById(R.id.sign_up_year);
+        mDateMonth = findViewById(R.id.sign_up_month);
+        mDateDay = findViewById(R.id.sign_up_day);
+        mAddress = findViewById(R.id.sign_up_address);
+        mAddressDetail = findViewById(R.id.sign_up_address_detail);
+        // 다음의 필드는 수동으로 입력할 수 없게 합니다.
+        mDateYear.setKeyListener(null);
+        mDateMonth.setKeyListener(null);
+        mDateDay.setKeyListener(null);
+        mAddress.setKeyListener(null);
     }
 
     /**
@@ -99,11 +104,14 @@ public final class SignUpActivity extends AppCompatActivity {
 
     /**
      * 닉네임을 검사한 후 가져옵니다.
-     * @param builder 회원가입 양식
+     * @param builder: 회원가입 양식
      * @return 입력값에 문제가 있으면 true 를 반환합니다.
      */
     private boolean setNickname(Account.Builder builder) {
-        String value = ((TextView) findViewById(R.id.sign_up_nickname)).getText().toString();
+        String value = mNickname.getText().toString();
+        // 입력값을 검사합니다.
+        if (value.length() < 4 || value.length() > 12)
+            return true;
         builder.setNickname(value);
         return false;
     }
@@ -111,33 +119,41 @@ public final class SignUpActivity extends AppCompatActivity {
     /**
      * 생년월일을 검사한 후 가져옵니다.
      * 생년월일은 반드시 yyyyMMdd 형식이어야 합니다.
-     * @param builder 회원가입 양식
+     * @param builder: 회원가입 양식
      * @return 입력값에 문제가 있으면 true 를 반환합니다.
      */
     private boolean setBirthday(Account.Builder builder) {
-        long value = 19870123;
-        builder.setBirthday(value);
+        // 입력값을 검사합니다.
+        if (date < 19000101 || date > 99991231)
+            return true;
+        builder.setBirthday(date);
         return false;
     }
 
     /**
      * 집주소를 검사한 후 가져옵니다.
-     * @param builder 회원가입 양식
+     * @param builder: 회원가입 양식
      * @return 입력값에 문제가 있으면 true 를 반환합니다.
      */
     private boolean setAddress(Account.Builder builder) {
-        String value = ((TextView) findViewById(R.id.sign_up_address)).getText().toString();
+        String value = mAddress.getText().toString();
+        // 입력값을 검사합니다.
+        if (value.length() < 4)
+            return true;
         builder.setAddress(value);
         return false;
     }
 
     /**
      * 세부주소를 검사한 후 가져옵니다.
-     * @param builder 회원가입 양식
+     * @param builder: 회원가입 양식
      * @return 입력값에 문제가 있으면 true 를 반환합니다.
      */
     private boolean setAddressDetail(Account.Builder builder) {
-        String value = ((TextView) findViewById(R.id.sign_up_address_detail)).getText().toString();
+        String value = mAddressDetail.getText().toString();
+        // 입력값을 검사합니다.
+        if (value.length() == 0)
+            return true;
         builder.setAddressDetail(value);
         return false;
     }
@@ -147,7 +163,56 @@ public final class SignUpActivity extends AppCompatActivity {
      * @param messageId: 저장된 메세지입니다.
      */
     private void assertCheckField(int messageId) {
-        CommonAlert.show(this, messageId, this::finish);
+        CommonAlert.show(this, messageId);
+    }
+
+    /**
+     * 사용자가 생년월일 정보를 캘린더를 통해 입력할 수 있게 합니다.
+     * @param view: 터치한 객체
+     */
+    public void onClickDate(View view)
+    {
+        CommonAlert.date(this, this::onReceiveDate, date);
+    }
+
+    /**
+     * 사용자가 생년월일 정보를 입력한 경우의 이벤트입니다.
+     * 년, 월, 일에 해당하는 각 필드의 값을 갱신합니다.
+     * @param date: yyyyMMdd 형식의 생년월일 정보
+     */
+    private void onReceiveDate(long date) {
+        this.date = date;
+        mDateYear.setText(String.valueOf(date / 10000));
+        mDateMonth.setText(String.valueOf((date / 100) % 100));
+        mDateDay.setText(String.valueOf(date % 100));
+    }
+
+    /**
+     * 사용자가 집주소를 외부 API 를 통해 입력할 수 있게 합니다.
+     * @param view 터치한 객체
+     */
+    public void onClickAddress(View view)
+    {
+        Intent intent = new Intent(this, AddressActivity.class);
+        startActivityForResult(intent, getResources().getInteger(R.integer.CODE_INTENT_ADDRESS));
+    }
+
+    /**
+     * 하위 액티비티로부터 결과를 수신받습니다.
+     * @param requestCode: 요청 코드
+     * @param resultCode: 응답 코드
+     * @param data: 결과값을 포함한 객체
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // 유효한 응답에만 반응합니다.
+        if (resultCode != RESULT_OK) return;
+        // 집주소를 입력받았을 경우의 이벤트입니다.
+        if (requestCode == getResources().getInteger(R.integer.CODE_INTENT_ADDRESS)) {
+            String value = data.getStringExtra("value");
+            mAddress.setText(value);
+        }
     }
 
     /**

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer name="CODE_PERMISSIONS_REQUEST">100</integer>
+    <integer name="CODE_INTENT_ADDRESS">1000</integer>
 </resources>
