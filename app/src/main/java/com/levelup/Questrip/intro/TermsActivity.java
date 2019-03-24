@@ -82,7 +82,7 @@ public final class TermsActivity extends AppCompatActivity {
      */
     private void onFailure(ClientRequestAsync.Failed failed) {
         ((CheckBox) findViewById(R.id.terms_btn_agree)).setChecked(false);
-        CommonAlert.failed(this, failed);
+        CommonAlert.failed(this, failed, R.string.terms_alert_rejected);
         onBreak = false;
     }
 

@@ -57,7 +57,7 @@ final class SignUpManager {
             // 회원가입에 성공한 경우
             if (accept) success.run();
             // 회원가입이 거절된 경우
-            else failure.run(ClientRequestAsync.Failed.INTERNAL);
+            else failure.run(ClientRequestAsync.Failed.REJECTED);
         } catch (JSONException e) {
             // 수신받은 데이터에 이상이 있는 경우.
             e.printStackTrace();

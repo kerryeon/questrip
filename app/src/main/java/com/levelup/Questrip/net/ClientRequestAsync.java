@@ -63,7 +63,6 @@ public final class ClientRequestAsync extends AsyncTask<
 
         } catch (IOException e) {
             // 네트워크 연결이 불안정한 경우입니다.
-            // TODO To be implemented.
             e.printStackTrace();
         } catch (NullPointerException e) {
             // URL 이 잘못된 경우 등입니다.
@@ -88,10 +87,20 @@ public final class ClientRequestAsync extends AsyncTask<
      * @param connection: 연결을 담당하는 객체
      * @param data: 전송할 RAW 데이터
      * @throws IOException 네트워크 이상으로 전송에 실패한 경우
+     *
+     * [이슈] 한글 전송 시 데이터 깨짐이 발생하였다.
+     * 그 이유는 다음의 메소드가 잘못된 데이터 전송을 시도하였기 때문이다.
+     * 이 문제는 현재 고쳐진 상태다.
+     * @see DataOutputStream#writeBytes(String)
+     * @see DataOutputStream#writeUTF(String)
      */
     private static void sendData(HttpURLConnection connection, String data) throws IOException {
         DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
-        wr.writeBytes(data);
+        for (char c : data.toCharArray())
+            // ASCII 문자인 경우, 일반 1바이트로 전송한다.
+            if (c <= 0x007F) wr.writeBytes(String.valueOf(c));
+            // 한글과 같은 유니코드 이상의 문자는, Unicode 변환 후에 전송한다.
+            else wr.writeBytes("\\u" + Integer.toHexString(c));
         wr.flush();
         wr.close();
     }
@@ -210,6 +219,11 @@ public final class ClientRequestAsync extends AsyncTask<
         INTERNAL,
         // 네트워크 연결이 불안정한 경우.
         NETWORK_FAILURE,
+        // 서버로부터 제공한 양식에 대해 거절당한 경우.
+        // 이 경우, 매 응답마다 다른 알림을 띄워야 한다.
+        REJECTED,
+        // [디버그 전용] 예상하지 못한 오류를 찾기 위한 경우.
+        UNEXPECTED,
     }
 
     /**

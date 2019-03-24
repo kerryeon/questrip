@@ -40,7 +40,8 @@ public final class IntroActivity extends Bootstrapper {
         // 이벤트 핸들러
         Handler handler = new Handler();
         // 인트로를 지정한 시간만큼 보여줍니다.
-        handler.postDelayed(this::requirePermission, waitTime);
+        handler.postDelayed(this::requirePermission,
+                getResources().getInteger(R.integer.CODE_ACTIVITY_SIGN_UP_WAIT));
     }
 
     /**

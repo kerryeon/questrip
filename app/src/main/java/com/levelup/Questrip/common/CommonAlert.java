@@ -108,17 +108,31 @@ public final class CommonAlert {
      * 서버로부터 긍정적인 응답이 오지 않은 경우, 그 이유를 사용자에게 알립니다.
      * @param context: 현재 액티비티
      * @param failed: 실패 이유.
+     */
+    public static void failed(Context context, ClientRequestAsync.Failed failed) {
+        failed(context, failed, R.string.common_failure_unknown);
+    }
+
+    /**
+     * 서버로부터 긍정적인 응답이 오지 않은 경우, 그 이유를 사용자에게 알립니다.
+     * @param context: 현재 액티비티
+     * @param failed: 실패 이유.
+     * @param messageOnRejected: 요청이 거절당한 경우의 메세지.
      * [예시]는 다음과 같습니다.
      * @see com.levelup.Questrip.intro.TermsActivity#onFailure(ClientRequestAsync.Failed)
      */
-    public static void failed(Context context, ClientRequestAsync.Failed failed) {
+    public static void failed(Context context, ClientRequestAsync.Failed failed,
+                              int messageOnRejected) {
         int messageId;
         switch (failed) {
             case INTERNAL:
                 messageId = R.string.common_failure_internal;
                 break;
             case NETWORK_FAILURE:
-                messageId = R.string.common_failure_internal;
+                messageId = R.string.common_failure_network;
+                break;
+            case REJECTED:
+                messageId = messageOnRejected;
                 break;
             default:
                 messageId = R.string.common_failure_unknown;
