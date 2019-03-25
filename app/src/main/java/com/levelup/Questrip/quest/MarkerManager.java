@@ -1,17 +1,26 @@
 package com.levelup.Questrip.quest;
 
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.levelup.Questrip.data.Quest;
+
 /**
- * 지도 위의 마커를 관리합니다.
+ * 지도 위의 마커의 디자인을 전담하는 클래스입니다.
  *
- * 담당자: 정홍기
+ * 담당자: 이동욱, 구본근
  *
- * 역할: 지도 위에 마커를 띄우고, 지우고, 터치 시 메세지를 띄우는 등 여러 기능을 구현합니다.
- * 마커 (Marker)는 사용자의 위치에 따라서 달리 보여야 합니다.
- *
- * 예제는 다음과 같습니다.
- * @see <a href="https://developers.google.com/maps/documentation/android-sdk/intro" />
- * @see <a href="https://webnautes.tistory.com/647" />
+ * 역할: 지도 위에 띄울 마커를 예쁘게 디자인합니다.
  */
 final class MarkerManager {
+
+    /**
+     * 마커를 디자인합니다.
+     * @param style 마커의 디자인 템플릿
+     * @param quest 퀘스트
+     * @return 디자인이 적용된 마커 디자인 템플릿
+     */
+    static MarkerOptions setStyle(MarkerOptions style, Quest quest) {
+        // TODO to be implemented.
+        return style.title(quest.getTitle());
+    }
 
 }

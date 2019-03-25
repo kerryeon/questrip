@@ -1,5 +1,9 @@
 package com.levelup.Questrip.data;
 
+import com.google.android.gms.maps.model.LatLng;
+
+import java.util.Comparator;
+
 /**
  * 퀘스트에 대한 자세한 정보를 담고 있는 클래스입니다.
  *
@@ -7,7 +11,7 @@ package com.levelup.Questrip.data;
  *
  * 역할: 퀘스트에 대한 자세한 정보를 관리합니다.
  */
-public final class Quest {
+public final class Quest implements Comparable<Quest> {
 
     private String title;
     private String description;
@@ -17,6 +21,24 @@ public final class Quest {
     private long date_end;
     private long rating;
     private boolean isCleared;
+
+    private static Quest[] list;
+
+    /**
+     * 인기 순으로 정렬되어있는 퀘스트 목록을 불러옵니다.
+     * @return 퀘스트 목록
+     */
+    public static Quest[] getList() {
+        return list;
+    }
+
+    /**
+     * 서버로부터 수신받은, 인기 순으로 정렬된 퀘스트 목록을 저장합니다.
+     * @param list 퀘스트 목록
+     */
+    public static void setList(Quest[] list) {
+        Quest.list = list;
+    }
 
     /**
      * 퀘스트의 제목을 가져옵니다.
@@ -80,6 +102,25 @@ public final class Quest {
      */
     public final boolean getIsCleared() {
         return isCleared;
+    }
+
+    /**
+     * 퀘스트의 위경도 값을 가져옵니다.
+     * @return 위경도
+     */
+    public LatLng getLatLng() {
+        return new LatLng(getLatitude(), getLongitude());
+    }
+
+    /**
+     * 퀘스트를 비교할 수 있습니다.
+     * 둘 중 어느 퀘스트가 더 인기있는지 비교합니다.
+     * @param o 다른 퀘스트
+     * @return this 퀘스트가 더 인기있다면 양수(+)를 반환합니다.
+     */
+    @Override
+    public int compareTo(Quest o) {
+        return (int) (this.getRating() - o.getRating());
     }
 
     /**
@@ -196,6 +237,33 @@ public final class Quest {
          */
         public final Quest create() {
             return quest;
+        }
+
+    }
+
+    /**
+     * 퀘스트의 정렬 비교 연산을 담당하는 클래스입니다.
+     *
+     * 담당자: 김호
+     */
+    public static class QuestComparator implements Comparator<Quest> {
+
+        /**
+         * 새로운 비교 연산 객체를 생성합니다.
+         */
+        public QuestComparator() {
+
+        }
+
+        /**
+         * 서로 다른 두 퀘스트의 인기도를 비교합니다.
+         * @param o1 퀘스트
+         * @param o2 다른 퀘스트
+         * @return o1 이 인기도가 더 높다면 true 를 반환합니다.
+         */
+        @Override
+        public int compare(Quest o1, Quest o2) {
+            return o1.compareTo(o2);
         }
 
     }

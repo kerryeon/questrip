@@ -6,6 +6,7 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -61,15 +62,20 @@ public final class ClientRequestAsync extends AsyncTask<
             // 수신이 성공적으로 완료된 경우, 결과를 반환합니다.
             return new ClientResponseFormat(result);
 
+        } catch (FileNotFoundException e) {
+            // 프로토콜이 잘못된 경우입니다.
+            e.printStackTrace();
+            return new ClientResponseFormat(Failed.INTERNAL);
         } catch (IOException e) {
             // 네트워크 연결이 불안정한 경우입니다.
             e.printStackTrace();
+            return new ClientResponseFormat(Failed.NETWORK_FAILURE);
         } catch (NullPointerException e) {
             // URL 이 잘못된 경우 등입니다.
             // 실질적으로 발생할 가능성은 없습니다.
             e.printStackTrace();
+            return new ClientResponseFormat(Failed.UNEXPECTED);
         }
-        return new ClientResponseFormat(Failed.NETWORK_FAILURE);
     }
 
     /**

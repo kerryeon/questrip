@@ -8,6 +8,8 @@ import android.support.v7.app.AlertDialog;
 import com.levelup.Questrip.R;
 import com.levelup.Questrip.net.ClientRequestAsync;
 
+import org.json.JSONObject;
+
 /**
  * 일반적인 알림창을 띄워주는 클래스입니다.
  *
@@ -110,7 +112,20 @@ public final class CommonAlert {
      * @param failed: 실패 이유.
      */
     public static void failed(Context context, ClientRequestAsync.Failed failed) {
-        failed(context, failed, R.string.common_failure_unknown);
+        failed(context, failed, R.string.common_failure_unknown, () -> {});
+    }
+
+    /**
+     * 서버로부터 긍정적인 응답이 오지 않은 경우, 그 이유를 사용자에게 알립니다.
+     * @param context: 현재 액티비티
+     * @param failed: 실패 이유.
+     * @param onConfirm: "확인" 버튼을 누르면 실행되는 이벤트입니다.
+     * [예시]는 다음과 같습니다.
+     * @see com.levelup.Questrip.quest.QuestMapActivity#onFailureLoadQuest(ClientRequestAsync.Failed)
+     */
+    public static void failed(Context context, ClientRequestAsync.Failed failed,
+                              Runnable onConfirm) {
+        failed(context, failed, R.string.common_failure_unknown, onConfirm);
     }
 
     /**
@@ -139,6 +154,33 @@ public final class CommonAlert {
                 break;
         }
         show(context, messageId, () -> {});
+    }
+
+    /**
+     * 서버로부터 긍정적인 응답이 오지 않은 경우, 그 이유를 사용자에게 알립니다.
+     * @param context: 현재 액티비티
+     * @param failed: 실패 이유.
+     * @param messageOnRejected: 요청이 거절당한 경우의 메세지.
+     * @param onConfirm: "확인" 버튼을 누르면 실행되는 이벤트입니다.
+     */
+    private static void failed(Context context, ClientRequestAsync.Failed failed,
+                              int messageOnRejected, Runnable onConfirm) {
+        int messageId;
+        switch (failed) {
+            case INTERNAL:
+                messageId = R.string.common_failure_internal;
+                break;
+            case NETWORK_FAILURE:
+                messageId = R.string.common_failure_network;
+                break;
+            case REJECTED:
+                messageId = messageOnRejected;
+                break;
+            default:
+                messageId = R.string.common_failure_unknown;
+                break;
+        }
+        show(context, messageId, onConfirm);
     }
 
     /**

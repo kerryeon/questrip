@@ -1,16 +1,13 @@
 package com.levelup.Questrip.quest;
 
+import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.levelup.Questrip.R;
 import com.levelup.Questrip.common.CommonAlert;
+import com.levelup.Questrip.common.QuestManager;
+import com.levelup.Questrip.net.ClientRequestAsync;
 
 /**
  * 지도 위에 퀘스트를 표시해주는 액티비티입니다.
@@ -24,33 +21,52 @@ import com.levelup.Questrip.common.CommonAlert;
  * 역할: 지도 위에 퀘스트를 표시합니다.
  * 퀘스트는 MarkerManager 를 통해 표시합니다.
  */
-public final class QuestMapActivity extends FragmentActivity implements OnMapReadyCallback {
+public final class QuestMapActivity extends FragmentActivity {
 
-    private GoogleMap googleMap;
+    private MapViewManager manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quest_map);
         // SupportMapFragment 객체를 획득한 후, 지도가 사용 가능한 지 검사합니다.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.activity_quest_map);
-        mapFragment.getMapAsync(this);
+        manager = new MapViewManager(this, this::onMapReady);
     }
 
     /**
      * 지도가 사용 가능할 때 발생하는 이벤트입니다.
      * 실질적으로 액티비티를 사용할 준비가 된 경우입니다.
-     * @param googleMap 지도 객체
      */
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        this.googleMap = googleMap;
+    public void onMapReady() {
+        tryUpdateList();
+    }
 
-        // Add a marker in Sydney and move the camera
-        LatLng city = new LatLng(35.154492, 128.098045);
-        googleMap.addMarker(new MarkerOptions().position(city).title("Marker in Jinju"));
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(city));
+    /**
+     * 서버로부터 퀘스트 목록을 가져옵니다.
+     * 목록을 수신받지 못하면, 그 이유를 알린 후 앱을 종료합니다.
+     */
+    private void tryUpdateList() {
+        QuestManager.updateList(this::onSuccessUpdateList, this::onFailureFatal);
+    }
+
+    /**
+     * 서버로부터 퀘스트 목록을 성공적으로 불러온 경우입니다.
+     * 마커를 갱신하고, 조금뒤 거리 순에서 보여줍니다.
+     */
+    private void onSuccessUpdateList() {
+        manager.updateMarkers();
+        // 잠시 후, 화면을 현재 위치가 중앙으로 보이게 하고, 거리 순에서 마커를 보여줍니다.
+        Handler handler = new Handler();
+        handler.postDelayed(manager::updateMarkersByDistance,
+                getResources().getInteger(R.integer.CODE_ACTIVITY_QUEST_MAP_WAIT_FOCUS));
+    }
+
+    /**
+     * 앱 구동에 필수적인 요청이 거절된 경우의 이벤트입니다.
+     * @param onFailure 실패 이유
+     */
+    private void onFailureFatal(ClientRequestAsync.Failed onFailure) {
+        CommonAlert.failed(this, onFailure, this::finishAndRemoveTask);
     }
 
     /**
