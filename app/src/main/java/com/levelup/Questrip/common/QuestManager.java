@@ -43,17 +43,18 @@ public final class QuestManager {
             // 퀘스트 목록을 가공합니다.
             Vector<Quest> quests = new Vector<Quest>() {{
                 for (int i = 0; i < source.length(); i++) {
-                    final JSONObject point = source.getJSONObject(0);
-                    Quest.Builder builder = new Quest.Builder();
-                    builder.setTitle(point.getString("title"));
-                    builder.setDescription(point.getString("description"));
-                    builder.setLatitude(point.getDouble("latitude"));
-                    builder.setLongitude(point.getDouble("longitude"));
-                    builder.setDateBegin(point.getLong("date_begin"));
-                    builder.setDateEnd(point.getLong("date_end"));
-                    builder.setRating(point.getLong("rating"));
-                    builder.setIsCleared(point.getBoolean("is_cleared"));
-                    add(builder.create());
+                    final JSONObject point = source.getJSONObject(i);
+                    add(new Quest.Builder()
+                            .setTitle(point.getString("title"))
+                            .setDescription(point.getString("description"))
+                            .setLocation(point.getString("location"))
+                            .setLatitude(point.getDouble("latitude"))
+                            .setLongitude(point.getDouble("longitude"))
+                            .setDateBegin(point.getLong("date_begin"))
+                            .setDateEnd(point.getLong("date_end"))
+                            .setRating(point.getLong("rating"))
+                            .setIsCleared(point.getBoolean("is_cleared"))
+                            .create());
                 }
             }};
             // 인기 순으로 정렬합니다.

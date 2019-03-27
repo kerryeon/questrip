@@ -98,10 +98,9 @@ final class PermissionManager {
      */
     private void requestPermissions(String... permissions) {
         // 퍼미션 요청이 필요한 버전에서만 수행합니다.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
             activity.requestPermissions(permissions, activity.getResources().getInteger(
                     R.integer.CODE_PERMISSIONS_REQUEST));
-        }
         // 퍼미션 요청이 필요없다면, 이 과정을 건너뜁니다.
         else granted = true;
     }

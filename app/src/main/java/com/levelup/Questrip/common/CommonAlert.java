@@ -4,11 +4,10 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.support.v7.app.AlertDialog;
+import android.widget.Toast;
 
 import com.levelup.Questrip.R;
 import com.levelup.Questrip.net.ClientRequestAsync;
-
-import org.json.JSONObject;
 
 /**
  * 일반적인 알림창을 띄워주는 클래스입니다.
@@ -107,6 +106,15 @@ public final class CommonAlert {
     }
 
     /**
+     * 사용자에게 간단한 정보를 알려주는 Toast 를 띄웁니다.
+     * @param context 현재 액티비티
+     * @param messageId 메세지
+     */
+    public static void toast(Context context, int messageId) {
+        Toast.makeText(context, messageId, Toast.LENGTH_LONG).show();
+    }
+
+    /**
      * 서버로부터 긍정적인 응답이 오지 않은 경우, 그 이유를 사용자에게 알립니다.
      * @param context: 현재 액티비티
      * @param failed: 실패 이유.
@@ -121,7 +129,7 @@ public final class CommonAlert {
      * @param failed: 실패 이유.
      * @param onConfirm: "확인" 버튼을 누르면 실행되는 이벤트입니다.
      * [예시]는 다음과 같습니다.
-     * @see com.levelup.Questrip.quest.QuestMapActivity#onFailureLoadQuest(ClientRequestAsync.Failed)
+     * @see com.levelup.Questrip.quest.QuestMapActivity#onFailureFatal(ClientRequestAsync.Failed)
      */
     public static void failed(Context context, ClientRequestAsync.Failed failed,
                               Runnable onConfirm) {

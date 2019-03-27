@@ -15,6 +15,7 @@ public final class Quest implements Comparable<Quest> {
 
     private String title;
     private String description;
+    private String location;
     private double latitude;
     private double longitude;
     private long date_begin;
@@ -54,6 +55,14 @@ public final class Quest implements Comparable<Quest> {
      */
     public final String getDescription() {
         return description;
+    }
+
+    /**
+     * 퀘스트의 위치 지명을 가져옵니다.
+     * @return 퀘스트의 위치 지명
+     */
+    public final String getLocation() {
+        return location;
     }
 
     /**
@@ -168,6 +177,16 @@ public final class Quest implements Comparable<Quest> {
          */
         public Builder setDescription(String value) {
             quest.description = value;
+            return this;
+        }
+
+        /**
+         * 퀘스트의 위치 지명을 설정합니다.
+         * @param value: 퀘스트의 위치 지명
+         * @return Builder
+         */
+        public Builder setLocation(String value) {
+            quest.location = value;
             return this;
         }
 

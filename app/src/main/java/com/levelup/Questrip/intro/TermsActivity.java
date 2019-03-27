@@ -41,9 +41,7 @@ public final class TermsActivity extends AppCompatActivity {
         if (onBreak) return;
         onBreak = true;
         // 약관에 동의하고, 회원가입 절차를 진행합니다.
-        Account.Builder builder = getFields();
-        builder.setTerms(true);
-        onSignUp(builder.create().setInstance());
+        onSignUp(getFields().create().setInstance());
     }
 
     /**

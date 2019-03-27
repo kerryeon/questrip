@@ -18,7 +18,6 @@ public final class Account implements Serializable {
     private long birthday;
     private String address;
     private String addressDetail;
-    private boolean terms;
 
     /**
      * 사용자 정보가 담겨진 객체를 불러옵니다.
@@ -70,21 +69,12 @@ public final class Account implements Serializable {
     }
 
     /**
-     * 사용자의 약관 동의 여부를 가져옵니다.
-     * @return 사용자의 약관 동의 여부
-     */
-    public final boolean getTerms() {
-        return terms;
-    }
-
-    /**
      * Builder 를 위해, 새로운 사용자 정보 객체를 생성합니다.
      */
     private Account() {
         nickname = "";
         address = "";
         addressDetail = "";
-        terms = false;
     }
 
     /**
@@ -139,16 +129,6 @@ public final class Account implements Serializable {
          */
         public Builder setAddressDetail(String value) {
             account.addressDetail = value;
-            return this;
-        }
-
-        /**
-         * 약관 동의 여부를 설정합니다.
-         * @param value: 약관 동의 여부
-         * @return Builder
-         */
-        public Builder setTerms(boolean value) {
-            account.terms = value;
             return this;
         }
 

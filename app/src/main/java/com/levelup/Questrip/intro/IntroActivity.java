@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.levelup.Questrip.R;
 import com.levelup.Questrip.common.Bootstrapper;
 import com.levelup.Questrip.common.CommonAlert;
+import com.levelup.Questrip.login.LoginManagerBase;
 import com.levelup.Questrip.quest.QuestMapActivity;
 import com.levelup.Questrip.common.LoginManager;
 
@@ -87,7 +88,7 @@ public final class IntroActivity extends Bootstrapper {
      * 로그인에 실패한 경우.
      * 로그인을 다시 시도해달라는 알림창을 한번 띄운 후, 앱을 종료합니다.
      */
-    private void onFailure(LoginManager.Failed failed) {
+    private void onFailure(LoginManagerBase.Failed failed) {
         int messageId;
         switch (failed) {
             case LOGIN_FAILED:

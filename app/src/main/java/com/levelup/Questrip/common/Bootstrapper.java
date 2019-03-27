@@ -58,6 +58,7 @@ public abstract class Bootstrapper extends AppCompatActivity {
      */
     private void initAPI() {
         initAPIFacebook();
+        LoginManager.init();
     }
 
     /**

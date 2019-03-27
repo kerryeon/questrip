@@ -8,8 +8,10 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.levelup.Questrip.R;
+import com.levelup.Questrip.common.CommonAlert;
 import com.levelup.Questrip.common.LocationManager;
 import com.levelup.Questrip.data.Quest;
 
@@ -28,7 +30,7 @@ import java.util.Vector;
  * @see <a href="https://developers.google.com/maps/documentation/android-sdk/intro" />
  * @see <a href="https://webnautes.tistory.com/647" />
  */
-final class MapViewManager implements GoogleMap.OnCameraIdleListener, OnMapReadyCallback {
+final class MapViewManager implements GoogleMap.OnCameraIdleListener, GoogleMap.OnMarkerClickListener, OnMapReadyCallback {
 
     private GoogleMap googleMap;
     private CameraPosition prevCameraPosition;
@@ -53,7 +55,10 @@ final class MapViewManager implements GoogleMap.OnCameraIdleListener, OnMapReady
         // SupportMapFragment 객체를 획득한 후, 지도가 사용 가능한 지 검사합니다.
         SupportMapFragment mapFragment = (SupportMapFragment) activity.getSupportFragmentManager()
                 .findFragmentById(R.id.activity_quest_map);
-        mapFragment.getMapAsync(this);
+        if (mapFragment != null) mapFragment.getMapAsync(this);
+        // Unreachable
+        else CommonAlert.show(activity, R.string.common_failure_unknown,
+                activity::finishAndRemoveTask);
     }
 
     /**
@@ -129,12 +134,39 @@ final class MapViewManager implements GoogleMap.OnCameraIdleListener, OnMapReady
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
         this.prevCameraPosition = googleMap.getCameraPosition();
-        googleMap.setOnCameraIdleListener(this);
+        // 각종 초기화 작업을 진행합니다.
+        initGoogleMapDesign();
+        initGoogleMapListeners();
         // 카메라를 전국 지도가 보이게 잡습니다.
         moveCamera(ZOOM_BY_RATING);
         // 지도를 사용할 준비가 되었음을 알립니다.
         onReady.run();
         onReady = null;
+    }
+
+    /**
+     * 각종 디자인 템플릿을 적용합니다.
+     */
+    private void initGoogleMapDesign() {
+        googleMap.getUiSettings().setMapToolbarEnabled(false);
+    }
+
+    /**
+     * 각종 이벤트 리스너들을 등록합니다.
+     */
+    private void initGoogleMapListeners() {
+        googleMap.setOnCameraIdleListener(this);
+        googleMap.setOnMarkerClickListener(this);
+    }
+
+    /**
+     * 사용자가 어떤 마커를 터치한 경우의 이벤트입니다.
+     * @param marker 터치한 마커
+     * @return 터치 이벤트를 소비하려면 true 를 반환합니다.
+     */
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        return true;
     }
 
     /**

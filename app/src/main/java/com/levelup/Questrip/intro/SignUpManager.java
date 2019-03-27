@@ -34,7 +34,6 @@ final class SignUpManager {
             object.put("birthday", account.getBirthday());
             object.put("address", account.getAddress());
             object.put("address_detail", account.getAddressDetail());
-            object.put("terms", account.getTerms());
         } catch (JSONException e) {
             // Unreachable
             e.printStackTrace();
