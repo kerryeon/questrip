@@ -1,7 +1,5 @@
 package com.levelup.Questrip.quest;
 
-import android.support.v4.app.FragmentActivity;
-
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -32,6 +30,8 @@ import java.util.Vector;
  */
 final class MapViewManager implements GoogleMap.OnCameraIdleListener, GoogleMap.OnMarkerClickListener, OnMapReadyCallback {
 
+    private QuestMapActivity activity;
+
     private GoogleMap googleMap;
     private CameraPosition prevCameraPosition;
     private LocationManager locationManager;
@@ -47,14 +47,15 @@ final class MapViewManager implements GoogleMap.OnCameraIdleListener, GoogleMap.
      * @param activity 현재 액티비티
      * @param onReady 지도가 사용 가능한 경우의 이벤트입니다.
      */
-    MapViewManager(FragmentActivity activity, Runnable onReady) {
+    MapViewManager(QuestMapActivity activity, Runnable onReady) {
+        this.activity = activity;
         this.onReady = onReady;
         this.limitList = activity.getResources()
                 .getInteger(R.integer.CODE_ACTIVITY_QUEST_MAP_LIMIT_LIST);
         this.locationManager = new LocationManager(activity);
         // SupportMapFragment 객체를 획득한 후, 지도가 사용 가능한 지 검사합니다.
         SupportMapFragment mapFragment = (SupportMapFragment) activity.getSupportFragmentManager()
-                .findFragmentById(R.id.activity_quest_map);
+                .findFragmentById(R.id.quest_map_map);
         if (mapFragment != null) mapFragment.getMapAsync(this);
         // Unreachable
         else CommonAlert.show(activity, R.string.common_failure_unknown,
@@ -105,8 +106,10 @@ final class MapViewManager implements GoogleMap.OnCameraIdleListener, GoogleMap.
      * @param quest 퀘스트
      */
     private void addMarker(Quest quest) {
-        googleMap.addMarker(MarkerManager.setStyle(
+        Marker marker = googleMap.addMarker(MarkerManager.setStyle(
                 new MarkerOptions().position(quest.getLatLng()), quest));
+        // 퀘스트 정보를 마커에 저장합니다.
+        setQuestToMarker(marker, quest);
     }
 
     /**
@@ -160,12 +163,34 @@ final class MapViewManager implements GoogleMap.OnCameraIdleListener, GoogleMap.
     }
 
     /**
+     * 마커로부터 퀘스트 정보를 불러옵니다.
+     * @param marker 마커
+     * @return 퀘스트 정보
+     */
+    private Quest getQuestFromMarker(final Marker marker) {
+        return (Quest) marker.getTag();
+    }
+
+    /**
+     * 마커에 퀘스트 정보를 저장합니다.
+     * @param marker 마커
+     * @param quest 퀘스트 정보
+     */
+    private void setQuestToMarker(Marker marker, Quest quest) {
+        marker.setTag(quest);
+    }
+
+    /**
      * 사용자가 어떤 마커를 터치한 경우의 이벤트입니다.
      * @param marker 터치한 마커
      * @return 터치 이벤트를 소비하려면 true 를 반환합니다.
      */
     @Override
-    public boolean onMarkerClick(Marker marker) {
+    public boolean onMarkerClick(final Marker marker) {
+        // 마커로부터 퀘스트 정보를 불러옵니다.
+        Quest quest = getQuestFromMarker(marker);
+        // TODO to be implemented.
+        CommonAlert.show(activity, R.string.debug_todo);
         return true;
     }
 

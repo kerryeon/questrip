@@ -1,10 +1,12 @@
-package com.levelup.Questrip.view;
+package com.levelup.Questrip.board;
 
 import android.app.Activity;
 import android.os.Bundle;
 
 import com.levelup.Questrip.R;
-import com.levelup.Questrip.data.Quest;
+import com.levelup.Questrip.data.Submission;
+
+import java.util.Vector;
 
 /**
  * 리더보드 레이아웃입니다.
@@ -16,7 +18,7 @@ import com.levelup.Questrip.data.Quest;
  */
 public final class LeaderBoardLayout extends Activity {
 
-    private Quest[] quests;
+    private Vector<Submission> submissions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

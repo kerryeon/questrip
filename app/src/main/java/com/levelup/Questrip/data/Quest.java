@@ -278,11 +278,11 @@ public final class Quest implements Comparable<Quest> {
          * 서로 다른 두 퀘스트의 인기도를 비교합니다.
          * @param o1 퀘스트
          * @param o2 다른 퀘스트
-         * @return o1 이 인기도가 더 높다면 true 를 반환합니다.
+         * @return o1 이 인기도가 더 낮다면 true 를 반환합니다.
          */
         @Override
         public int compare(Quest o1, Quest o2) {
-            return o1.compareTo(o2);
+            return o2.compareTo(o1);
         }
 
     }

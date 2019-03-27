@@ -1,12 +1,16 @@
 package com.levelup.Questrip.quest;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.View;
 
 import com.levelup.Questrip.R;
+import com.levelup.Questrip.about.AboutActivity;
 import com.levelup.Questrip.common.CommonAlert;
 import com.levelup.Questrip.common.QuestManager;
+import com.levelup.Questrip.config.ConfigActivity;
 import com.levelup.Questrip.net.ClientRequestAsync;
 
 /**
@@ -67,6 +71,28 @@ public final class QuestMapActivity extends FragmentActivity {
      */
     private void onFailureFatal(ClientRequestAsync.Failed onFailure) {
         CommonAlert.failed(this, onFailure, this::finishAndRemoveTask);
+    }
+
+    /**
+     * 사용자 정보 보기 버튼을 눌렀을 경우의 이벤트입니다.
+     * 사용자 정보 액티비티로 이동합니다.
+     * @param view 사용자 정보 보기 버튼
+     */
+    public void onClickAbout(View view) {
+        // TODO 버튼 디자인
+        Intent intent = new Intent(getApplicationContext(), AboutActivity.class);
+        startActivity(intent);
+    }
+
+    /**
+     * 환경설정 버튼을 눌렀을 경우의 이벤트입니다.
+     * 환경설정 액티비티로 이동합니다.
+     * @param view 환경설정 버튼
+     */
+    public void onClickConfig(View view) {
+        // TODO 버튼 디자인
+        Intent intent = new Intent(getApplicationContext(), ConfigActivity.class);
+        startActivity(intent);
     }
 
     /**

@@ -1,4 +1,4 @@
-package com.levelup.Questrip.view;
+package com.levelup.Questrip.board;
 
 import android.app.Activity;
 import android.os.Bundle;
