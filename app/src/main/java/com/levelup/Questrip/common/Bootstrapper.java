@@ -8,6 +8,7 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.levelup.Questrip.R;
+import com.levelup.Questrip.debug.DevDigest;
 
 /**
  * 첫 실행시 실행되는 액티비티를 Bootstrapper 라고 합니다.
@@ -27,6 +28,7 @@ public abstract class Bootstrapper extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        DevDigest.printHashKey(this);
         init();
     }
 
