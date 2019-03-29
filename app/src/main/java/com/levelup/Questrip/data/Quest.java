@@ -284,7 +284,6 @@ public final class Quest implements Comparable<Quest> {
         public int compare(Quest o1, Quest o2) {
             return o2.compareTo(o1);
         }
-
     }
 
 }

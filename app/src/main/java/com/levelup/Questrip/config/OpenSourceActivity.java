@@ -2,6 +2,8 @@ package com.levelup.Questrip.config;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
+import android.widget.TextView;
 
 import com.levelup.Questrip.R;
 
@@ -19,5 +21,8 @@ public final class OpenSourceActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_open_source);
+
+        TextView Opensource = (TextView) findViewById(R.id.opensource);
+        Opensource.setMovementMethod(new ScrollingMovementMethod());
     }
 }

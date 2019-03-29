@@ -6,4 +6,34 @@
     android:layout_height="match_parent"
     tools:context=".config.ConfigActivity">
 
+    <LinearLayout
+        android:layout_width="253dp"
+        android:layout_height="163dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/config_btn_logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClickLogout"
+            android:text="Logout" />
+
+        <Button
+            android:id="@+id/config_btn_my_quest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClickMyquest"
+            android:text="My Quest" />
+
+        <Button
+            android:id="@+id/config_btn_open_source"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClickOpensource"
+            android:text="Open Source License" />
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>
