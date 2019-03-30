@@ -19,7 +19,9 @@ import com.levelup.Questrip.quest.QuestMapActivity;
  * 담당자: 이동욱, 구본근
  *
  * 역할: 약관을 보여줍니다.
- * "동의"한다는 체크박스를 만들어, 약관을 다 읽었음을 알려야 합니다.
+ * 중앙에 약관 설명이 있어 사용자가 읽어볼 수 있어야 합니다.
+ * 약관에 "동의"한다는 체크박스를 만들어, 약관을 다 읽었음을 알려야 합니다.
+ * 약관에 동의하여 회원가입이 완료되면, 가입을 축하한다는 알림창을 한번 띄운 후 메인화면으로 이동합니다.
  */
 public final class TermsActivity extends AppCompatActivity {
 

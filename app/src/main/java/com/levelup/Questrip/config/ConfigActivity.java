@@ -1,16 +1,12 @@
 package com.levelup.Questrip.config;
 
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.app.AlertDialog;
-import android.widget.Button;
 
-import com.facebook.login.LoginManager;
 import com.levelup.Questrip.R;
+import com.levelup.Questrip.common.CommonAlert;
 
 /**
  * 환경설정 화면 액티비티입니다.
@@ -26,52 +22,63 @@ import com.levelup.Questrip.R;
  */
 public final class ConfigActivity extends AppCompatActivity {
 
-    final Context context = this;
-    private Button button;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_config);
-
-        button = (Button) findViewById(R.id.config_btn_logout);
     }
 
-    public void onClickLogout(View v)
+    /**
+     * 사용자가 "로그아웃" 버튼을 통해 로그아웃을 시도하는 경우의 이벤트입니다.
+     * @param v 버튼
+     */
+    public void onLogout(View v)
     {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-        alertDialogBuilder.setTitle("로그아웃");
-
-        alertDialogBuilder.setMessage("로그아웃 하시겠습니까?").setCancelable(false)
-                .setPositiveButton("종료", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        LoginManager.getInstance().logOut();
-                        finishAffinity();
-                    }
-                })
-                .setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-
-        AlertDialog alertDialog = alertDialogBuilder.create();
-
-        alertDialog.show();
+        CommonAlert.show(this, R.string.config_alert_logout, this::tryLogout, () -> {});
     }
 
-    public void onClickMyquest(View v)
+    /**
+     * 사용자가 "회원탈퇴" 버튼을 통해 영구적으로 탈퇴하려는 경우의 이벤트입니다.
+     * @param v 버튼
+     */
+    public void onSignOut(View v)
     {
-        /**
-         * 아직 구현하지 않은 범위
-         */
+        CommonAlert.show(this, R.string.config_alert_sign_out, this::trySignOut, () -> {});
     }
 
-    public void onClickOpensource(View v)
+    /**
+     * 사용자가 "오픈소스 약관" 버튼을 통해, 앱에 사용된 오픈소스들의 라이선스를 조회하려는 경우의 이벤트입니다.
+     * 오픈소스 보기 액티비티로 이동합니다.
+     * @param v 버튼
+     */
+    public void onShowOpenSource(View v)
     {
         Intent intent = new Intent(getApplicationContext(), OpenSourceActivity.class);
         startActivity(intent);
     }
+
+    /**
+     * 사용자의 로그아웃을 시도합니다.
+     * 로그아웃한 후에는 앱을 종료합니다.
+     */
+    private void tryLogout() {
+        CommonAlert.show(this, R.string.debug_todo, this::exitProcess);
+    }
+
+    /**
+     * 사용자의 회원탈퇴를 시도합니다.
+     * 회원탈퇴한 후에는, 그동안 감사했다는 메세지를 띄운 후, 앱을 종료합니다.
+     */
+    private void trySignOut() {
+        CommonAlert.show(this, R.string.debug_todo, this::exitProcess);
+    }
+
+    /**
+     * 프로세스를 안전하고 완전하게 종료합니다.
+     */
+    private void exitProcess() {
+        finishAndRemoveTask();
+        android.os.Process.killProcess(android.os.Process.myPid());
+    }
+
 }

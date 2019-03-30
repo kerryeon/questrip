@@ -21,9 +21,9 @@ import com.levelup.Questrip.common.CommonAlert;
  *
  * 입력 정보:
  * 닉네임 ( 문자열, 4자~12자, 한글 허용, 특수문자 금지, 예시: 감자리아1234 )
- * 생년월일 ( 날짜, yyyyMMdd, 예시: 19980904 )
- * 주소 ( 문자열, AddressManager 를 통해 획득 )
- * 약관 ( Boolean, 약관 설명 화면으로 이동할 수 있어야 합니다. )
+ * 생년월일 ( 날짜, yyyyMMdd, 예시: 19980904 ) - 캘린더를 이용한다.
+ * 주소 ( 문자열, AddressManager 를 통해 획득 ) - Daum 주소입력창 API 를 이용한다.
+ * 상세주소 ( 문자열 )
  */
 public final class SignUpActivity extends AppCompatActivity {
 
