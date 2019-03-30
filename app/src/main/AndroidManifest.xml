@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.levelup.Questrip">
+
     <!-- Permissions -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -14,14 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity
-            android:name=".quest_map"
-            android:label="@string/title_activity_quest_map"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
-            android:name=".quest_map2"
-            android:label="@string/title_activity_quest_map2"
-            android:theme="@style/AppTheme.NoActionBar" /> <!-- Activities -->
+
+        <!-- Activities -->
         <activity android:name=".about.AboutActivity" />
         <activity android:name=".board.LeaderBoardContentLayout" />
         <activity android:name=".board.LeaderBoardLayout" />
@@ -31,7 +26,9 @@
         <activity android:name=".config.ConfigActivity" />
         <activity android:name=".config.OpenSourceActivity" />
         <activity android:name=".quest.QuestMapActivity" />
-        <activity android:name=".view.LeaderBoardActivity" /> <!-- Main Activity -->
+        <activity android:name=".view.LeaderBoardActivity" />
+
+        <!-- Main Activity -->
         <activity
             android:name=".intro.IntroActivity"
             android:label="@string/app_name">
@@ -40,7 +37,9 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- Facebook API -->
+        </activity>
+
+        <!-- Facebook API -->
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
@@ -60,7 +59,9 @@
 
                 <data android:scheme="@string/facebook_login_protocol_scheme" />
             </intent-filter>
-        </activity> <!-- Google Maps API -->
+        </activity>
+
+        <!-- Google Maps API -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
