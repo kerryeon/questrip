@@ -2,6 +2,7 @@ package com.levelup.Questrip.data;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
 /**
@@ -11,8 +12,9 @@ import java.util.Comparator;
  *
  * 역할: 퀘스트에 대한 자세한 정보를 관리합니다.
  */
-public final class Quest implements Comparable<Quest> {
+public final class Quest implements Comparable<Quest>, Serializable {
 
+    private long id;
     private String title;
     private String description;
     private String location;
@@ -39,6 +41,14 @@ public final class Quest implements Comparable<Quest> {
      */
     public static void setList(Quest[] list) {
         Quest.list = list;
+    }
+
+    /**
+     * 퀘스트의 고유번호를 가져옵니다.
+     * @return 퀘스트의 고유번호
+     */
+    public final long getID() {
+        return id;
     }
 
     /**
@@ -158,6 +168,16 @@ public final class Quest implements Comparable<Quest> {
          */
         public Builder() {
             quest = new Quest();
+        }
+
+        /**
+         * 퀘스트의 고유번호를 설정합니다.
+         * @param value: 퀘스트의 고유번호
+         * @return Builder
+         */
+        public Builder setID(long value) {
+            quest.id = value;
+            return this;
         }
 
         /**

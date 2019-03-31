@@ -40,7 +40,7 @@
             android:id="@+id/config_btn_my_quest"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:background="@color/colorPrimary"
             android:onClick="onSignOut"
             android:text="@string/config_button_sign_out" />
@@ -49,7 +49,7 @@
             android:id="@+id/config_btn_open_source"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:background="@color/colorPrimary"
             android:onClick="onShowOpenSource"
             android:text="@string/config_button_open_source" />

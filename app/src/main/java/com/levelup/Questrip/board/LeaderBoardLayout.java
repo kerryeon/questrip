@@ -1,10 +1,13 @@
 package com.levelup.Questrip.board;
 
 import android.app.Activity;
-import android.os.Bundle;
+import android.widget.RadioGroup;
 
 import com.levelup.Questrip.R;
+import com.levelup.Questrip.common.CommonAlert;
+import com.levelup.Questrip.common.SubmissionManagerBase;
 import com.levelup.Questrip.data.Submission;
+import com.levelup.Questrip.net.ClientRequestAsync;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -18,14 +21,46 @@ import java.util.Vector;
  *
  * 역할: 정해진 순서에 맞추어 결과물을 나열합니다.
  */
-public final class LeaderBoardLayout extends Activity {
+public final class LeaderBoardLayout implements RadioGroup.OnCheckedChangeListener {
 
     private Vector<Submission> submissions;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_leader_board);
+    private Activity activity;
+    private SubmissionManagerBase manager;
+
+    /**
+     * 리더보드를 초기화합니다.
+     * @param activity 현재 액티비티
+     * @param manager 제출물 관리자
+     */
+    public LeaderBoardLayout(Activity activity, SubmissionManagerBase manager) {
+        this.activity = activity;
+        this.manager = manager;
+        init();
+        loadList();
+    }
+
+    /**
+     * 필드 및 변수값을 초기화합니다.
+     */
+    private void init() {
+        RadioGroup sortMode = activity.findViewById(R.id.leader_board_radio_group);
+        sortMode.setOnCheckedChangeListener(this);
+    }
+
+    /**
+     * 서버로부터 제출물 목록을 불러옵니다.
+     */
+    private void loadList() {
+        manager.updateList(this::onSuccessUpdateSubmissions, this::onFailureFatal);
+    }
+
+    /**
+     * 리더보드를 다시 그립니다.
+     */
+    private void updateItems() {
+
+        // TODO to be implemented.
     }
 
     /**
@@ -35,6 +70,8 @@ public final class LeaderBoardLayout extends Activity {
      * @param mode 정렬 모드
      */
     private void sortWith(SortMode mode) {
+        // 제출물을 아직 볼러오지 못한 경우, 정렬하지 않습니다.
+        if (submissions == null) return;
         // 정렬 연산 클래스를 선택합니다.
         Comparator<Submission> comparator;
         switch (mode) {
@@ -48,6 +85,50 @@ public final class LeaderBoardLayout extends Activity {
         }
         // 결과물을 정렬합니다.
         Collections.sort(submissions, comparator);
+    }
+
+    /**
+     * 서버로부터 성공적으로 제출물 목록을 불러온 경우의 이벤트입니다.
+     * 추천순으로 정렬하여 보여줍니다.
+     * @param submissions 제출물
+     */
+    private void onSuccessUpdateSubmissions(Vector<Submission> submissions) {
+        this.submissions = submissions;
+        sortWith(SortMode.Rating);
+    }
+
+    /**
+     * 앱 구동에 필수적인 요청이 거절된 경우의 이벤트입니다.
+     * 거절된 이유를 띄운 후, 이전 화면으로 복귀합니다.
+     * @param failed 실패 이유
+     */
+    private void onFailureFatal(ClientRequestAsync.Failed failed) {
+        CommonAlert.failed(activity, failed, activity::finish);
+    }
+
+    /**
+     * 사용자가 정렬 버튼을 터치한 경우의 이벤트입니다.
+     * 지정한 기준에 맞추어 정렬합니다.
+     * @param group 버튼 그룹
+     * @param checkedId 선택한 버튼 ID
+     */
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        // 선택한 정렬 모드를 구합니다.
+        SortMode mode;
+        switch (checkedId) {
+            case R.id.learder_board_radio_rating:
+                mode = SortMode.Rating;
+                break;
+            case R.id.learder_board_radio_date:
+            default:
+                mode = SortMode.Newest;
+                break;
+        }
+        // 정렬합니다.
+        sortWith(mode);
+        // 리더보드에 반영합니다.
+        updateItems();
     }
 
     /**

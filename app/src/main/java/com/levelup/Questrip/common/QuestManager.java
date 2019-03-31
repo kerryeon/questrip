@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.Vector;
 
 /**
- * 퀘스트 목록을 불러오고, 업로드하고, 정렬하는 등의 기능을 전담하는 클래스입니다.
+ * 퀘스트 목록을 불러오고, 정렬하는 등의 기능을 전담하는 클래스입니다.
  *
  * 담당자: 정홍기, 김호
  *
@@ -45,6 +45,7 @@ public final class QuestManager {
                 for (int i = 0; i < source.length(); i++) {
                     final JSONObject point = source.getJSONObject(i);
                     add(new Quest.Builder()
+                            .setID(point.getLong("_id"))
                             .setTitle(point.getString("title"))
                             .setDescription(point.getString("description"))
                             .setLocation(point.getString("location"))

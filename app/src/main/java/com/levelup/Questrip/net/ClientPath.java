@@ -9,4 +9,7 @@ public final class ClientPath {
     // explore
     public static String MAP = "/me/quest";
 
+    // about leader_board
+    public static String ABOUT_BOARD = "/me/board";
+
 }

@@ -57,6 +57,10 @@ final class ClientHeader {
         }
     }
 
+    /**
+     * 패킷 헤더를 첨부합니다.
+     * @param connection HTTP 커넥션
+     */
     static void attachHeaderJson(HttpURLConnection connection) {
         try {
             connection.setRequestMethod("POST");

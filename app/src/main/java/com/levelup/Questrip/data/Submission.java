@@ -11,10 +11,29 @@ import java.util.Comparator;
  */
 public final class Submission {
 
+    private long id;
+    private long user_id;
     private String nickname;
+    private String imagePath;
     private byte[] image;
     private long date;
     private long rating;
+
+    /**
+     * 제출물의 고유번호를 불러옵니다.
+     * @return 제출물의 고유번호
+     */
+    public final long getID() {
+        return id;
+    }
+
+    /**
+     * 제출한 자의 고유번호를 불러옵니다.
+     * @return 제출한 자의 고유번호
+     */
+    public final long getUserID() {
+        return user_id;
+    }
 
     /**
      * 제출한 자의 닉네임을 불러옵니다.
@@ -22,6 +41,14 @@ public final class Submission {
      */
     public final String getNickname() {
         return nickname;
+    }
+
+    /**
+     * 제출물의 이미지 경로를 불러옵니다.
+     * @return 제출물의 이미지 경로
+     */
+    public final String getImagePath() {
+        return imagePath;
     }
 
     /**
@@ -73,12 +100,42 @@ public final class Submission {
         }
 
         /**
+         * 제출물의 고유번호를 설정합니다.
+         * @param value: 제출물의 고유번호
+         * @return Builder
+         */
+        public Builder setID(long value) {
+            submission.id = value;
+            return this;
+        }
+
+        /**
+         * 제출한 자의 고유번호를 설정합니다.
+         * @param value: 제출한 자의 고유번호
+         * @return Builder
+         */
+        public Builder setUserID(long value) {
+            submission.user_id = value;
+            return this;
+        }
+
+        /**
          * 제출한 자의 닉네임을 설정합니다.
          * @param value: 제출한 자의 닉네임
          * @return Builder
          */
         public Builder setNickname(String value) {
             submission.nickname = value;
+            return this;
+        }
+
+        /**
+         * 제출물의 이미지 경로를 설정합니다.
+         * @param value: 제출물의 이미지 경로
+         * @return Builder
+         */
+        public Builder setImagePath(String value) {
+            submission.imagePath = value;
             return this;
         }
 

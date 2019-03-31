@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.levelup.Questrip.R;
+import com.levelup.Questrip.board.LeaderBoardLayout;
 
 /**
  * 사용자 정보 보기 화면 액티비티입니다.
@@ -26,9 +27,24 @@ import com.levelup.Questrip.R;
  */
 public class AboutActivity extends AppCompatActivity {
 
+    LeaderBoardLayout leaderBoard;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
+        init();
     }
+
+    /**
+     * 필드 및 변수값을 초기화합니다.
+     */
+    private void init() {
+        leaderBoard = new LeaderBoardLayout(this, new AboutSubmissionManager());
+    }
+
+    private void getQuest() {
+
+    }
+
 }

@@ -28,7 +28,7 @@ public abstract class Bootstrapper extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        DevDigest.printHashKey(this);
+        // DevDigest.printHashKey(this);
         init();
     }
 
