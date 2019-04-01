@@ -23,6 +23,11 @@ public abstract class LoginManagerBase {
     public abstract void tryLogin(Bootstrapper activity, Runnable success, OnFailure failure);
 
     /**
+     * 외부 API 를 통해 로그아웃 요청을 합니다.
+     */
+    public abstract void tryLogout();
+
+    /**
      * 사용자의 엑세스 토큰이 유효하여 현재 로그인된 상태인지 확인합니다.
      * @return 토큰이 유효하다면 true 를 반환합니다.
      */

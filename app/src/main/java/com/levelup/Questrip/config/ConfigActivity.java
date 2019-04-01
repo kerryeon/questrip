@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.levelup.Questrip.R;
 import com.levelup.Questrip.common.CommonAlert;
+import com.levelup.Questrip.common.LoginManager;
 
 /**
  * 환경설정 화면 액티비티입니다.
@@ -41,9 +42,9 @@ public final class ConfigActivity extends AppCompatActivity {
      * 사용자가 "회원탈퇴" 버튼을 통해 영구적으로 탈퇴하려는 경우의 이벤트입니다.
      * @param v 버튼
      */
-    public void onSignOut(View v)
+    public void onSignOff(View v)
     {
-        CommonAlert.show(this, R.string.config_alert_sign_out, this::trySignOut, () -> {});
+        CommonAlert.show(this, R.string.config_alert_sign_off, this::trySignOff, () -> {});
     }
 
     /**
@@ -62,15 +63,17 @@ public final class ConfigActivity extends AppCompatActivity {
      * 로그아웃한 후에는 앱을 종료합니다.
      */
     private void tryLogout() {
-        CommonAlert.show(this, R.string.debug_todo, this::exitProcess);
+        LoginManager.tryLogout();
+        exitProcess();
     }
 
     /**
      * 사용자의 회원탈퇴를 시도합니다.
      * 회원탈퇴한 후에는, 그동안 감사했다는 메세지를 띄운 후, 앱을 종료합니다.
      */
-    private void trySignOut() {
-        CommonAlert.show(this, R.string.debug_todo, this::exitProcess);
+    private void trySignOff() {
+        // TODO to be implemented.
+        CommonAlert.show(this, R.string.config_alert_sign_off_success, this::exitProcess);
     }
 
     /**

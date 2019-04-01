@@ -70,6 +70,15 @@ public final class FacebookLoginManager extends LoginManagerBase {
     }
 
     /**
+     * 외부 API 를 통해 로그아웃 요청을 합니다.
+     */
+    @Override
+    public void tryLogout() {
+        com.facebook.login.LoginManager manager = com.facebook.login.LoginManager.getInstance();
+        manager.logOut();
+    }
+
+    /**
      * 사용자의 엑세스 토큰이 유효하여 현재 로그인된 상태인지 확인합니다.
      * @return 토큰이 유효하다면 true 를 반환합니다.
      */

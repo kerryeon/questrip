@@ -159,6 +159,15 @@ public final class QuestMapActivity extends FragmentActivity implements Navigati
     }
 
     /**
+     * "리더보드" 버튼을 통해 퀘스트의 리더보드를 조회하려는 경우의 이벤트입니다.
+     * 리더보드 화면으로 이동합니다.
+     * @param view 메뉴 버튼
+     */
+    public void onShowLeaderBoard(View view) {
+        // TODO to be implemented.
+    }
+
+    /**
      * 메뉴의 어떤 항목을 선택한 경우의 이벤트입니다.
      * 메뉴창을 닫고, 각 항목의 역할을 수행합니다.
      * @param item 항목

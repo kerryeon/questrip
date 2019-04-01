@@ -45,6 +45,13 @@ public final class LoginManager {
     }
 
     /**
+     * 외부 API 를 통해 로그아웃 요청을 합니다.
+     */
+    public static void tryLogout() {
+        api.tryLogout();
+    }
+
+    /**
      * 엑세스 토큰을 이용하여 서버에 로그인 시도를 합니다.
      * @param success: 로그인에 성공한 경우의 이벤트입니다.
      * @param new_user: 로그인에 성공했으나, 새로운 유저인 경우의 이벤트입니다.

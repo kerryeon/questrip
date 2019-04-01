@@ -24,18 +24,21 @@ import java.util.Vector;
 public final class LeaderBoardLayout implements RadioGroup.OnCheckedChangeListener {
 
     private Vector<Submission> submissions;
+    private SortMode mode;
 
     private Activity activity;
     private SubmissionManagerBase manager;
 
     /**
      * 리더보드를 초기화합니다.
+     * 정렬 기준은 추천순을 기본값으로 합니다.
      * @param activity 현재 액티비티
      * @param manager 제출물 관리자
      */
     public LeaderBoardLayout(Activity activity, SubmissionManagerBase manager) {
         this.activity = activity;
         this.manager = manager;
+        this.mode = SortMode.Rating;
         init();
         loadList();
     }
@@ -59,7 +62,6 @@ public final class LeaderBoardLayout implements RadioGroup.OnCheckedChangeListen
      * 리더보드를 다시 그립니다.
      */
     private void updateItems() {
-
         // TODO to be implemented.
     }
 
@@ -67,9 +69,8 @@ public final class LeaderBoardLayout implements RadioGroup.OnCheckedChangeListen
      * 선택한 정렬 모드에 맞추어 결과물을 정렬합니다.
      * 정렬 결과는 submissions 변수에 즉시 반영됩니다.
      * @see LeaderBoardLayout#submissions
-     * @param mode 정렬 모드
      */
-    private void sortWith(SortMode mode) {
+    private void sort() {
         // 제출물을 아직 볼러오지 못한 경우, 정렬하지 않습니다.
         if (submissions == null) return;
         // 정렬 연산 클래스를 선택합니다.
@@ -94,7 +95,7 @@ public final class LeaderBoardLayout implements RadioGroup.OnCheckedChangeListen
      */
     private void onSuccessUpdateSubmissions(Vector<Submission> submissions) {
         this.submissions = submissions;
-        sortWith(SortMode.Rating);
+        sort();
     }
 
     /**
@@ -115,18 +116,16 @@ public final class LeaderBoardLayout implements RadioGroup.OnCheckedChangeListen
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         // 선택한 정렬 모드를 구합니다.
-        SortMode mode;
         switch (checkedId) {
             case R.id.learder_board_radio_rating:
                 mode = SortMode.Rating;
                 break;
             case R.id.learder_board_radio_date:
-            default:
                 mode = SortMode.Newest;
                 break;
         }
         // 정렬합니다.
-        sortWith(mode);
+        sort();
         // 리더보드에 반영합니다.
         updateItems();
     }

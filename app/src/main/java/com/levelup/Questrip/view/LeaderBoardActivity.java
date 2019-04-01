@@ -2,8 +2,10 @@ package com.levelup.Questrip.view;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
 import com.levelup.Questrip.R;
+import com.levelup.Questrip.common.CommonAlert;
 
 /**
  * 리더보드 화면 액티비티입니다.
@@ -23,4 +25,33 @@ public final class LeaderBoardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leader_board);
     }
+
+    /**
+     * 사용자가 단말기에서 이미지를 선택한 경우의 이벤트입니다.
+     * 이미지를 불러와 서버에 업로드합니다.
+     * @param path 이미지 경로
+     */
+    private void onSelectImage(String path) {
+        // TODO to be implemented.
+    }
+
+    /**
+     * 서버에 결과물을 성공적으로 업로드한 경우의 이벤트입니다.
+     * 사용자가 이를 알리고, 리더보드를 최신순으로 갱신합니다.
+     */
+    private void onSuccessSubmit() {
+        CommonAlert.show(this, R.string.view_alert_submitted);
+        // TODO to be implemented.
+    }
+
+    /**
+     * "도전하기" 버튼을 통해 결과물을 업로드하려는 경우의 이벤트입니다.
+     * 단말기로부터 업로드할 이미지를 가져옵니다.
+     *
+     * @param view 도전하기 버튼
+     */
+    public void onSubmit(View view) {
+        // TODO to be implemented.
+    }
+
 }
