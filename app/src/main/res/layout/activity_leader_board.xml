@@ -71,6 +71,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="88dp"
+            android:layout_height="41dp"
+            android:layout_marginStart="16dp"
+            android:background="@color/colorPrimary"
+            android:text="도전"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
     </android.support.constraint.ConstraintLayout>
 
     <ScrollView

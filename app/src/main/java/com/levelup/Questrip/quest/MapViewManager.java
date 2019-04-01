@@ -1,5 +1,7 @@
 package com.levelup.Questrip.quest;
 
+import android.content.Intent;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
