@@ -41,9 +41,6 @@ public class AboutActivity extends AppCompatActivity {
      */
     private void init() {
         leaderBoard = new LeaderBoardLayout(this, new AboutSubmissionManager());
-        // TODO 아이템 그리기 추가할 것.
-        // TODO 업로드 버튼 추가할 것.
-        // TODO 어제 코드 수정한부분 설계서에 다 반영할 것.
     }
 
 }

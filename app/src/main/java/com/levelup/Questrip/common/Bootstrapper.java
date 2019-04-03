@@ -8,6 +8,7 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.levelup.Questrip.R;
+import com.levelup.Questrip.anim.Sliding;
 import com.levelup.Questrip.debug.DevDigest;
 
 /**
@@ -36,9 +37,17 @@ public abstract class Bootstrapper extends AppCompatActivity {
      * 프로세스를 초기화합니다.
      */
     private void init() {
+        initAnimation();
         initCallback();
         initPermission();
         initAPI();
+    }
+
+    /**
+     * 애니메이션을 초기화합니다.
+     */
+    private void initAnimation() {
+        Sliding.init(this);
     }
 
     /**

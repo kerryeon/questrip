@@ -10,7 +10,7 @@
     android:paddingBottom="16dp">
 
     <TextView
-        android:id="@+id/quest_about_quest_name"
+        android:id="@+id/quest_about_field_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
@@ -19,7 +19,7 @@
         android:textSize="30sp" />
 
     <TextView
-        android:id="@+id/quest_about_quest_info"
+        android:id="@+id/quest_about_field_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
@@ -28,7 +28,7 @@
         android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/quest_about_quest_addr"
+        android:id="@+id/quest_about_field_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
@@ -37,7 +37,7 @@
         android:textSize="24sp" />
 
     <TextView
-        android:id="@+id/quest_about_quest_period"
+        android:id="@+id/quest_about_field_period"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
@@ -50,6 +50,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
+        android:onClick="onShowLeaderBoard"
         android:text="리더보드"
         android:textSize="18sp" />
 </LinearLayout>

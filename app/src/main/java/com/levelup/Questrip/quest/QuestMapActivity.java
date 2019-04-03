@@ -17,12 +17,13 @@ import com.levelup.Questrip.common.CommonAlert;
 import com.levelup.Questrip.common.QuestManager;
 import com.levelup.Questrip.config.ConfigActivity;
 import com.levelup.Questrip.data.Account;
+import com.levelup.Questrip.data.Quest;
 import com.levelup.Questrip.net.ClientRequestAsync;
 
 /**
  * 지도 위에 퀘스트를 표시해주는 액티비티입니다.
  * 퀘스트를 터치하면 해당 퀘스트에 대한 간략한 정보를 보여주는 레이아웃이 아래서부터 올라옵니다.
- * 한편, 상단 우측에 = 같은 모양의 버튼을 두어, 환경설정 액티비티로 이동할 수 있게 합니다.
+ * 한편, 상단 좌측에 = 같은 모양의 버튼을 두어, 메뉴창을 열 수 있게 합니다.
  *
  * 담당자: 이동욱, 구본근
  *
@@ -43,6 +44,7 @@ public final class QuestMapActivity extends FragmentActivity implements Navigati
 
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
+    private QuestAboutLayout questAboutLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,11 +58,12 @@ public final class QuestMapActivity extends FragmentActivity implements Navigati
      */
     private void init() {
         // SupportMapFragment 객체를 획득한 후, 지도가 사용 가능한 지 검사합니다.
-        manager = new MapViewManager(this, this::onMapReady);
+        manager = new MapViewManager(this, this::onMapReady, this::onShowQuestInfo);
 
         // 필드
         drawerLayout = findViewById(R.id.quest_map);
         navigationView = drawerLayout.findViewById(R.id.quest_map_nav_menu);
+        questAboutLayout = new QuestAboutLayout(this);
 
         // 닉네임, 집주소 추가
         View header = navigationView.getHeaderView(0);
@@ -139,6 +142,8 @@ public final class QuestMapActivity extends FragmentActivity implements Navigati
      * 메뉴창을 엽니다.
      */
     private void openMenu() {
+        // 퀘스트 설명창은 닫습니다.
+        questAboutLayout.hide();
         drawerLayout.openDrawer(navigationView);
     }
 
@@ -146,7 +151,20 @@ public final class QuestMapActivity extends FragmentActivity implements Navigati
      * 메뉴창을 닫습니다.
      */
     private void closeMenu() {
-        drawerLayout.closeDrawer(navigationView);
+        if (isMenuOpen())
+            drawerLayout.closeDrawer(navigationView);
+    }
+
+    /**
+     * 마커를 눌러 해당 퀘스트의 정보를 보려는 경우의 이벤트입니다.
+     * 마커가 아닌 맵을 터치한 경우, 퀘스트 정보창을 내립니다.
+     * @param quest 퀘스트. null 인 경우, 맵을 터치한 경우.
+     */
+    private void onShowQuestInfo(final Quest quest) {
+        // 맵을 터치한 경우, 퀘스트 정보창을 내립니다.
+        if (quest == null) questAboutLayout.hide();
+        // 마커를 터치한 경우, 퀘스트 정보창을 띄웁니다.
+        else questAboutLayout.show(quest);
     }
 
     /**
@@ -165,6 +183,7 @@ public final class QuestMapActivity extends FragmentActivity implements Navigati
      */
     public void onShowLeaderBoard(View view) {
         // TODO to be implemented.
+        CommonAlert.show(this, R.string.debug_todo);
     }
 
     /**
@@ -173,6 +192,7 @@ public final class QuestMapActivity extends FragmentActivity implements Navigati
      * @param item 항목
      * @return 항목이 선택된 경우의 이펙트를 적용하려면 true 를 반환합니다.
      */
+    @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // 일단 메뉴는 닫습니다.
         closeMenu();
@@ -195,7 +215,9 @@ public final class QuestMapActivity extends FragmentActivity implements Navigati
     public void onBackPressed() {
         // 메뉴창이 열려있는 경우, 메뉴창을 닫습니다.
         if (isMenuOpen()) closeMenu();
-        // 메뉴창이 닫혀있는 경우, 앱을 종료할 것인지 물어봅니다.
+        // 퀘스트 설명창이 열러있는 경우, 창을 닫습니다.
+        else if (questAboutLayout.isOpen()) questAboutLayout.hide();
+        // 아무것도 열러있지 않은 경우, 앱을 종료할 것인지 물어봅니다.
         else CommonAlert.closeApp(this);
     }
 

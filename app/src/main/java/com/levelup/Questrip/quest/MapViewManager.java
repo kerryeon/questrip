@@ -7,6 +7,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -30,7 +31,7 @@ import java.util.Vector;
  * @see <a href="https://developers.google.com/maps/documentation/android-sdk/intro" />
  * @see <a href="https://webnautes.tistory.com/647" />
  */
-final class MapViewManager implements GoogleMap.OnCameraIdleListener, GoogleMap.OnMarkerClickListener, OnMapReadyCallback {
+final class MapViewManager implements GoogleMap.OnCameraIdleListener, GoogleMap.OnMapClickListener, GoogleMap.OnMarkerClickListener, OnMapReadyCallback {
 
     private QuestMapActivity activity;
 
@@ -40,6 +41,7 @@ final class MapViewManager implements GoogleMap.OnCameraIdleListener, GoogleMap.
 
     private int limitList;
     private Runnable onReady;
+    private QuestAboutLayout.OnInfo onInfo;
 
     private static final float ZOOM_BY_DISTANCE = 8.25f;
     private static final float ZOOM_BY_RATING = 7.25f;
@@ -48,13 +50,22 @@ final class MapViewManager implements GoogleMap.OnCameraIdleListener, GoogleMap.
      * 지도를 초기화합니다.
      * @param activity 현재 액티비티
      * @param onReady 지도가 사용 가능한 경우의 이벤트입니다.
+     * @param onInfo 마커를 누른 경우의 이벤트입니다.
      */
-    MapViewManager(QuestMapActivity activity, Runnable onReady) {
+    MapViewManager(QuestMapActivity activity, Runnable onReady, QuestAboutLayout.OnInfo onInfo) {
         this.activity = activity;
         this.onReady = onReady;
+        this.onInfo = onInfo;
         this.limitList = activity.getResources()
                 .getInteger(R.integer.CODE_ACTIVITY_QUEST_MAP_LIMIT_LIST);
         this.locationManager = new LocationManager(activity);
+        init();
+    }
+
+    /**
+     * 상태 및 이벤트를 초기화합니다.
+     */
+    private void init() {
         // SupportMapFragment 객체를 획득한 후, 지도가 사용 가능한 지 검사합니다.
         SupportMapFragment mapFragment = (SupportMapFragment) activity.getSupportFragmentManager()
                 .findFragmentById(R.id.quest_map_map);
@@ -131,25 +142,6 @@ final class MapViewManager implements GoogleMap.OnCameraIdleListener, GoogleMap.
     }
 
     /**
-     * 지도가 사용 가능할 때 발생하는 이벤트입니다.
-     * 실질적으로 액티비티를 사용할 준비가 된 경우입니다.
-     * @param googleMap 지도 객체
-     */
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        this.googleMap = googleMap;
-        this.prevCameraPosition = googleMap.getCameraPosition();
-        // 각종 초기화 작업을 진행합니다.
-        initGoogleMapDesign();
-        initGoogleMapListeners();
-        // 카메라를 전국 지도가 보이게 잡습니다.
-        moveCamera(ZOOM_BY_RATING);
-        // 지도를 사용할 준비가 되었음을 알립니다.
-        onReady.run();
-        onReady = null;
-    }
-
-    /**
      * 각종 디자인 템플릿을 적용합니다.
      */
     private void initGoogleMapDesign() {
@@ -162,6 +154,7 @@ final class MapViewManager implements GoogleMap.OnCameraIdleListener, GoogleMap.
     private void initGoogleMapListeners() {
         googleMap.setOnCameraIdleListener(this);
         googleMap.setOnMarkerClickListener(this);
+        googleMap.setOnMapClickListener(this);
     }
 
     /**
@@ -183,6 +176,34 @@ final class MapViewManager implements GoogleMap.OnCameraIdleListener, GoogleMap.
     }
 
     /**
+     * 지도가 사용 가능할 때 발생하는 이벤트입니다.
+     * 실질적으로 액티비티를 사용할 준비가 된 경우입니다.
+     * @param googleMap 지도 객체
+     */
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        this.googleMap = googleMap;
+        this.prevCameraPosition = googleMap.getCameraPosition();
+        // 각종 초기화 작업을 진행합니다.
+        initGoogleMapDesign();
+        initGoogleMapListeners();
+        // 카메라를 전국 지도가 보이게 잡습니다.
+        moveCamera(ZOOM_BY_RATING);
+        // 지도를 사용할 준비가 되었음을 알립니다.
+        onReady.run();
+        onReady = null;
+    }
+
+    /**
+     * 사용자가 맵을 터치한 경우의 이벤트입니다.
+     * @param location 터치한 곳의 지도상의 위치
+     */
+    @Override
+    public void onMapClick(final LatLng location) {
+        onInfo.run(null);
+    }
+
+    /**
      * 사용자가 어떤 마커를 터치한 경우의 이벤트입니다.
      * @param marker 터치한 마커
      * @return 터치 이벤트를 소비하려면 true 를 반환합니다.
@@ -190,10 +211,9 @@ final class MapViewManager implements GoogleMap.OnCameraIdleListener, GoogleMap.
     @Override
     public boolean onMarkerClick(final Marker marker) {
         // 마커로부터 퀘스트 정보를 불러옵니다.
-        Quest quest = getQuestFromMarker(marker);
-        // TODO to be implemented.
-        CommonAlert.show(activity, R.string.debug_todo);
-        return true;
+        final Quest quest = getQuestFromMarker(marker);
+        onInfo.run(quest);
+        return false;
     }
 
     /**

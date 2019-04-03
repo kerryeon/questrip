@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- TODO Release API Keys -->
+    <!-- Facebook Login API -->
+    <string name="facebook_app_id" templateMergeStrategy="preserve"
+        translatable="false">TODO</string>
+    <string name="facebook_login_protocol_scheme" templateMergeStrategy="preserve"
+        translatable="false">TODO</string>
+    <!-- Google Maps API -->
+    <string name="google_maps_key" templateMergeStrategy="preserve"
+        translatable="false">TODO</string>
+</resources>
