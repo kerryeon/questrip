@@ -25,6 +25,7 @@ public final class QuestAboutLayout {
     private TextView mPeriod;
 
     private boolean _isOpen;
+    private Quest currentQuest;
 
     /**
      * 레이아웃 객체를 생성합니다.
@@ -33,6 +34,7 @@ public final class QuestAboutLayout {
     QuestAboutLayout(QuestMapActivity activity) {
         this.layout = activity.findViewById(R.id.quest_map_about);
         this._isOpen = false;
+        this.currentQuest = null;
         init();
     }
 
@@ -53,6 +55,7 @@ public final class QuestAboutLayout {
      * @param quest 선택한 퀘스트
      */
     void show(final Quest quest) {
+        currentQuest = quest;
         mTitle.setText(quest.getTitle());
         mDesc.setText(quest.getDescription());
         mLocation.setText(quest.getLocation());
@@ -81,6 +84,15 @@ public final class QuestAboutLayout {
      */
     boolean isOpen() {
         return _isOpen;
+    }
+
+    /**
+     * 현재 표시중인 퀘스트 정보를 반환합니다.
+     * @return 퀘스트 (null 일 수 있음)
+     */
+    @Nullable
+    final Quest getCurrentQuest() {
+        return currentQuest;
     }
 
     /**

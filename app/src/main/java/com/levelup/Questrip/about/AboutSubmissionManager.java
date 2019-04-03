@@ -6,11 +6,11 @@ import com.levelup.Questrip.net.ClientRequest;
 import com.levelup.Questrip.net.ClientRequestAsync;
 
 /**
- * 퀘스트 제출물을 불러오고, 업로드하고, 추천하는 등의 기능을 전담하는 클래스입니다.
+ * 사용자가 제출한 퀘스트들을 조회하는 기능을 전담하는 클래스입니다.
  *
  * 담당자: 정홍기, 김호
  *
- * 역할: 퀘스트 제출물을 불러오고, 업로드하고, 추천하거나 신고합니다.
+ * 역할: 사용자가 제출한 퀘스트들을 조회합니다.
  */
 public final class AboutSubmissionManager extends SubmissionManagerBase {
 
@@ -23,6 +23,15 @@ public final class AboutSubmissionManager extends SubmissionManagerBase {
     public void updateList(onSuccess onSuccess, ClientRequestAsync.OnFailure onFailure) {
         ClientRequest.send(ClientPath.ABOUT_BOARD,
                 o -> onUpdateResponseSuccess(o, onSuccess, onFailure), onFailure);
+    }
+
+    /**
+     * 신고, 추천버튼을 사용하는 지 검사합니다.
+     * @return 사용한다면 true 를 반환합니다.
+     */
+    @Override
+    public boolean useButtons() {
+        return false;
     }
 
 }

@@ -1,10 +1,12 @@
 package com.levelup.Questrip.board;
 
 import android.app.Activity;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 
 import com.levelup.Questrip.R;
 import com.levelup.Questrip.common.CommonAlert;
+import com.levelup.Questrip.common.ReportManager;
 import com.levelup.Questrip.common.SubmissionManagerBase;
 import com.levelup.Questrip.data.Submission;
 import com.levelup.Questrip.net.ClientRequestAsync;
@@ -29,6 +31,8 @@ public final class LeaderBoardLayout implements RadioGroup.OnCheckedChangeListen
     private Activity activity;
     private SubmissionManagerBase manager;
 
+    private LinearLayout mContents;
+
     /**
      * 리더보드를 초기화합니다.
      * 정렬 기준은 추천순을 기본값으로 합니다.
@@ -47,6 +51,10 @@ public final class LeaderBoardLayout implements RadioGroup.OnCheckedChangeListen
      * 필드 및 변수값을 초기화합니다.
      */
     private void init() {
+        // 필드
+        mContents = activity.findViewById(R.id.leader_board_contents);
+
+        // 이벤트
         RadioGroup sortMode = activity.findViewById(R.id.leader_board_radio_group);
         sortMode.setOnCheckedChangeListener(this);
     }
@@ -62,6 +70,39 @@ public final class LeaderBoardLayout implements RadioGroup.OnCheckedChangeListen
      * 리더보드를 다시 그립니다.
      */
     private void updateItems() {
+        // 기존의 아이템들을 모두 지웁니다.
+        mContents.removeAllViews();
+        // 아이템을 추가합니다.
+        for (int i = 0; i < submissions.size(); i++) {
+            Submission submission = submissions.get(i);
+            LeaderBoardContentLayout.addItem(activity, mContents, i, submission,
+                    manager.useButtons(), this::onTouchReport, this::onTouchVote);
+        }
+    }
+
+    /**
+     * 사용자가 신고 버튼을 터치한 경우의 이벤트입니다.
+     * @param index 제출물의 인덱싱 번호
+     */
+    private void onTouchReport(int index) {
+        final Submission submission = submissions.get(index);
+        // 신고 이유 목록을 불러온다.
+        final String[] lists = activity.getResources().getStringArray(R.array.view_list_report);
+        // 신고창을 띄운다.
+        CommonAlert.choose(activity, R.string.view_title_report, lists,
+                chosen -> ReportManager.tryReport(submission, chosen,
+                        // 신고에 성공한 경우의 이벤트입니다.
+                        () -> CommonAlert.toast(activity, R.string.view_alert_reported),
+                        // 신고에 실패한 경우의 이벤트입니다.
+                        (f) -> CommonAlert.failed(activity, f, R.string.view_alert_report_duplicated)));
+    }
+
+    /**
+     * 사용자가 추천 버튼을 터치한 경우의 이벤트입니다.
+     * @param index 제출물의 인덱싱 번호
+     */
+    private void onTouchVote(int index) {
+        CommonAlert.show(activity, R.string.debug_todo);
         // TODO to be implemented.
     }
 
@@ -96,6 +137,7 @@ public final class LeaderBoardLayout implements RadioGroup.OnCheckedChangeListen
     private void onSuccessUpdateSubmissions(Vector<Submission> submissions) {
         this.submissions = submissions;
         sort();
+        updateItems();
     }
 
     /**
@@ -132,6 +174,8 @@ public final class LeaderBoardLayout implements RadioGroup.OnCheckedChangeListen
 
     /**
      * 리더보드의 정렬 방식을 나열합니다.
+     *
+     * 담당자: 김호
      */
     private enum SortMode {
         Rating,  // 추천순

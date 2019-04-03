@@ -1,11 +1,15 @@
 package com.levelup.Questrip.view;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
 import com.levelup.Questrip.R;
+import com.levelup.Questrip.about.AboutSubmissionManager;
+import com.levelup.Questrip.board.LeaderBoardLayout;
 import com.levelup.Questrip.common.CommonAlert;
+import com.levelup.Questrip.data.Quest;
 
 /**
  * 리더보드 화면 액티비티입니다.
@@ -18,12 +22,22 @@ import com.levelup.Questrip.common.CommonAlert;
  * 바로 밑에는 "최신 순", "추천 순"을 선택할 수 있는 라디오버튼 (혹은 이와 비슷한 것)들이 있어야 합니다.
  * 그 밑에는 리더보드가 있어, 순서에 맞추어 결과물들을 보여줍니다.
  */
-public final class LeaderBoardActivity extends AppCompatActivity {
+public final class ViewActivity extends AppCompatActivity {
+
+    LeaderBoardLayout leaderBoard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_leader_board);
+        setContentView(R.layout.activity_view);
+        init();
+    }
+
+    /**
+     * 필드 및 변수값을 초기화합니다.
+     */
+    private void init() {
+        leaderBoard = new LeaderBoardLayout(this, new ViewSubmissionManager(getQuest()));
     }
 
     /**
@@ -31,7 +45,7 @@ public final class LeaderBoardActivity extends AppCompatActivity {
      * 이미지를 불러와 서버에 업로드합니다.
      * @param path 이미지 경로
      */
-    private void onSelectImage(String path) {
+    private void onSelectImage(final String path) {
         // TODO to be implemented.
     }
 
@@ -45,6 +59,15 @@ public final class LeaderBoardActivity extends AppCompatActivity {
     }
 
     /**
+     * 퀘스트 정보를 불러옵니다.
+     * @return 퀘스트
+     */
+    private Quest getQuest() {
+        Intent intent = getIntent();
+        return (Quest) intent.getSerializableExtra("quest");
+    }
+
+    /**
      * "도전하기" 버튼을 통해 결과물을 업로드하려는 경우의 이벤트입니다.
      * 단말기로부터 업로드할 이미지를 가져옵니다.
      *
@@ -52,6 +75,7 @@ public final class LeaderBoardActivity extends AppCompatActivity {
      */
     public void onSubmit(View view) {
         // TODO to be implemented.
+        CommonAlert.show(this, R.string.debug_todo);
     }
 
 }

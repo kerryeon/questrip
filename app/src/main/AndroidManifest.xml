@@ -18,15 +18,13 @@
 
         <!-- Activities -->
         <activity android:name=".about.AboutActivity" />
-        <activity android:name=".board.LeaderBoardContentLayout" />
         <activity android:name=".intro.AddressActivity" />
         <activity android:name=".intro.SignUpActivity" />
         <activity android:name=".intro.TermsActivity" />
         <activity android:name=".config.ConfigActivity" />
         <activity android:name=".config.OpenSourceActivity" />
         <activity android:name=".quest.QuestMapActivity" />
-        <activity android:name=".quest.QuestAboutLayout" />
-        <activity android:name=".view.LeaderBoardActivity" />
+        <activity android:name=".view.ViewActivity" />
 
         <!-- Main Activity -->
         <activity

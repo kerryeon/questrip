@@ -19,6 +19,7 @@ import com.levelup.Questrip.config.ConfigActivity;
 import com.levelup.Questrip.data.Account;
 import com.levelup.Questrip.data.Quest;
 import com.levelup.Questrip.net.ClientRequestAsync;
+import com.levelup.Questrip.view.ViewActivity;
 
 /**
  * 지도 위에 퀘스트를 표시해주는 액티비티입니다.
@@ -36,7 +37,7 @@ import com.levelup.Questrip.net.ClientRequestAsync;
  * 퀘스트 위치 (지명)
  * 퀘스트 시작일 및 종료일
  * 리더보드 버튼 - 리더보드 보기 화면으로 이동합니다.
- * @see com.levelup.Questrip.view.LeaderBoardActivity
+ * @see ViewActivity
  */
 public final class QuestMapActivity extends FragmentActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -182,8 +183,12 @@ public final class QuestMapActivity extends FragmentActivity implements Navigati
      * @param view 메뉴 버튼
      */
     public void onShowLeaderBoard(View view) {
-        // TODO to be implemented.
-        CommonAlert.show(this, R.string.debug_todo);
+        final Quest quest = questAboutLayout.getCurrentQuest();
+        // 리더보드 화면으로 이동합니다.
+        Intent intent = new Intent(getApplicationContext(), ViewActivity.class);
+        // 퀘스트 정보를 전달합니다.
+        intent.putExtra("quest", quest);
+        startActivity(intent);
     }
 
     /**

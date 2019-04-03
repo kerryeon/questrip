@@ -26,6 +26,12 @@ public abstract class SubmissionManagerBase {
     public abstract void updateList(onSuccess onSuccess, ClientRequestAsync.OnFailure onFailure);
 
     /**
+     * 신고, 추천버튼을 사용하는 지 검사합니다.
+     * @return 사용한다면 true 를 반환합니다.
+     */
+    public abstract boolean useButtons();
+
+    /**
      * 서버로부터 제출물 목록을 성공적으로 불러왔을 경우의 이벤트입니다.
      * @param response 제출물 목록
      * @param onSuccess 요청이 성공적인 경우의 이벤트입니다.

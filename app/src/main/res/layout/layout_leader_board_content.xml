@@ -2,10 +2,11 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
+    android:layout_marginBottom="16dp"
     android:background="@color/bg_light"
     tools:context=".board.LeaderBoardContentLayout">
 
@@ -17,7 +18,7 @@
         android:layout_marginTop="16dp"
         android:text="@string/sign_up_field_nickname"
         android:textColor="@android:color/black"
-        android:textSize="16sp"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -49,60 +50,70 @@
             app:layout_constraintTop_toTopOf="@+id/leader_board_photo" />
     </FrameLayout>
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="347dp"
         android:layout_height="40dp"
-        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
         app:layout_constraintTop_toTopOf="@+id/guideline6">
 
-        <TextView
-            android:id="@+id/leader_board_field_rating"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="17dp"
-            android:layout_marginEnd="8dp"
-            android:textSize="12sp"
-            tools:layout_editor_absoluteX="48dp"
-            tools:layout_editor_absoluteY="335dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="17dp"
-            android:text="@string/leader_board_likes"
-            android:textSize="12sp"
-            tools:layout_editor_absoluteX="99dp"
-            tools:layout_editor_absoluteY="335dp" />
-
-        <Space
-            android:layout_width="246dp"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <ImageButton
-            android:id="@+id/leader_board_btn_report"
-            android:layout_width="32dp"
-            android:layout_height="24dp"
-            android:layout_marginEnd="24dp"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_siren" />
+            <TextView
+                android:id="@+id/leader_board_field_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:textSize="18sp"
+                tools:layout_editor_absoluteX="48dp"
+                tools:layout_editor_absoluteY="335dp" />
 
-        <ImageButton
-            android:id="@+id/leader_board_btn_likes"
-            android:layout_width="27dp"
-            android:layout_height="27dp"
-            android:layout_gravity="right"
-            android:layout_marginEnd="0dp"
-            android:layout_marginBottom="0dp"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_likes"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/guideline7"
-            app:layout_constraintTop_toTopOf="@+id/guideline6"
-            app:layout_constraintVertical_bias="0.225" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/leader_board_likes"
+                android:textSize="18sp"
+                tools:layout_editor_absoluteX="99dp"
+                tools:layout_editor_absoluteY="335dp" />
+        </LinearLayout>
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageButton
+                android:id="@+id/leader_board_btn_report"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_siren" />
+
+            <ImageButton
+                android:id="@+id/leader_board_btn_vote"
+                android:layout_width="27dp"
+                android:layout_height="27dp"
+                android:layout_gravity="end"
+                android:layout_marginEnd="0dp"
+                android:layout_marginBottom="0dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_likes"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideline7"
+                app:layout_constraintTop_toTopOf="@+id/guideline6"
+                app:layout_constraintVertical_bias="0.225" />
+        </LinearLayout>
+
+    </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline4"

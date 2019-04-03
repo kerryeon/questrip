@@ -18,6 +18,8 @@ import com.levelup.Questrip.net.ClientRequestAsync;
  */
 public final class CommonAlert {
 
+    private static int numChosen;
+
     /**
      * "확인" 버튼 하나 있는 일반적인 알림창을 띄웁니다.
      * @param context: 현재 액티비티
@@ -101,6 +103,35 @@ public final class CommonAlert {
                 )
                 .setOnCancelListener(
                         dialog -> onDenied.run()
+                )
+                .create().show();
+    }
+
+    /**
+     * 여러 선택지가 있는 알림창을 띄웁니다.
+     * @param context 현재 액티비티
+     * @param titleId 제목 ID
+     * @param lists 선택지 목록
+     * @param onChoose 선택지 중 하나를 선택한 경우의 이벤트입니다.
+     *                 취소를 누른 경우 -1을 반환합니다.
+     */
+    public static void choose(Context context, int titleId, String[] lists, OnChoose onChoose) {
+        // 선택지를 초기화한다.
+        numChosen = -1;
+        // 알림창의 띄운다.
+        new AlertDialog.Builder(context)
+                .setTitle(titleId)
+                .setSingleChoiceItems(
+                        lists, -1, (dialog, i) -> numChosen = i
+                )
+                .setPositiveButton(R.string.common_alert_confirm,
+                        (dialog, which) -> onChoose.run(numChosen)
+                )
+                .setNegativeButton(R.string.common_alert_cancel,
+                        (dialog, which) -> onChoose.run(-1)
+                )
+                .setOnCancelListener(
+                        dialog -> onChoose.run(-1)
                 )
                 .create().show();
     }
@@ -251,6 +282,20 @@ public final class CommonAlert {
     }
 
     /**
+     * 사용자가 여러 선택지 중에서 하나를 고른 경우의 이벤트입니다.
+     */
+    @FunctionalInterface
+    public interface OnChoose {
+
+        /**
+         * 선택한 선택지의 인덱싱 번호를 반환합니다.
+         * @param chosen: 선택한 선택지 번호. 0부터 시작합니다.
+         *              아무것도 고르지 않은 경우, -1을 반환합니다.
+         */
+        void run(final int chosen);
+    }
+
+    /**
      * 캘린더에서 적절한 날짜를 입력받았을 경우의 이벤트입니다.
      */
     @FunctionalInterface
@@ -260,7 +305,7 @@ public final class CommonAlert {
          * 입력값을 반환합니다.
          * @param value: yyyyMMdd 형식의 날짜 데이터.
          */
-        void run(long value);
+        void run(final long value);
     }
 
 }
