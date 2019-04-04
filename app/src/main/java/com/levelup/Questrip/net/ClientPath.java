@@ -11,6 +11,7 @@ public final class ClientPath {
 
     // view leader_board
     public static String VIEW = "/me/view";
+    public static String SUBMIT = "/me/submit";
     public static String REPORT = "/me/report";
     public static String VOTE = "/me/vote";
 

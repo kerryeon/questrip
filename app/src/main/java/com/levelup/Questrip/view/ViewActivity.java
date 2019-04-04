@@ -6,9 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.levelup.Questrip.R;
-import com.levelup.Questrip.about.AboutSubmissionManager;
 import com.levelup.Questrip.board.LeaderBoardLayout;
 import com.levelup.Questrip.common.CommonAlert;
+import com.levelup.Questrip.common.FileManager;
 import com.levelup.Questrip.data.Quest;
 
 /**
@@ -46,7 +46,11 @@ public final class ViewActivity extends AppCompatActivity {
      * @param path 이미지 경로
      */
     private void onSelectImage(final String path) {
-        // TODO to be implemented.
+        // 전송할 사진을 불러옵니다.
+        final byte[] input = FileManager.getBytes(path);
+        // 서버에 제출합니다.
+        leaderBoard.trySubmit(input, this::onSuccessSubmit,
+                (f) -> CommonAlert.failed(this, f));
     }
 
     /**
@@ -55,7 +59,8 @@ public final class ViewActivity extends AppCompatActivity {
      */
     private void onSuccessSubmit() {
         CommonAlert.show(this, R.string.view_alert_submitted);
-        // TODO to be implemented.
+        // 리더보드를 갱신합니다.
+        leaderBoard.loadList();
     }
 
     /**

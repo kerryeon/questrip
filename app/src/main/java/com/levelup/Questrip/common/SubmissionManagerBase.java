@@ -35,6 +35,7 @@ public abstract class SubmissionManagerBase {
      * 서버로부터 제출물 목록을 성공적으로 불러왔을 경우의 이벤트입니다.
      * @param response 제출물 목록
      * @param onSuccess 요청이 성공적인 경우의 이벤트입니다.
+     * @param onFailure 요청이 실패한 경우의 이벤트입니다.
      */
     protected void onUpdateResponseSuccess(final JSONObject response, onSuccess onSuccess,
                                            ClientRequestAsync.OnFailure onFailure) {
@@ -48,7 +49,7 @@ public abstract class SubmissionManagerBase {
                             .setID(point.getLong("_id"))
                             .setUserID(point.getLong("user_id"))
                             .setNickname(point.getString("nickname"))
-                            .setImagePath(point.getString("name"))
+                            .setImagePath(point.getString("path"))
                             .setDate(point.getLong("date"))
                             .setRating(point.getLong("rating"))
                             .create());

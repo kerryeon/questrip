@@ -10,6 +10,7 @@ import com.levelup.Questrip.common.ReportManager;
 import com.levelup.Questrip.common.SubmissionManagerBase;
 import com.levelup.Questrip.data.Submission;
 import com.levelup.Questrip.net.ClientRequestAsync;
+import com.levelup.Questrip.view.ViewSubmissionManager;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -43,8 +44,27 @@ public final class LeaderBoardLayout implements RadioGroup.OnCheckedChangeListen
         this.activity = activity;
         this.manager = manager;
         this.mode = SortMode.Rating;
+        this.submissions = null;
         init();
         loadList();
+    }
+
+    /**
+     * 서버에 결과물을 제출합니다.
+     * @param image 이미지
+     * @param onSuccess 요청이 성공한 경우의 이벤트입니다.
+     * @param onFailure 요청이 실패한 경우의 이벤트입니다.
+     */
+    public void trySubmit(final byte[] image, Runnable onSuccess,
+                          ClientRequestAsync.OnFailure onFailure) {
+        ((ViewSubmissionManager) manager).trySubmit(image, onSuccess, onFailure);
+    }
+
+    /**
+     * 서버로부터 제출물 목록을 불러옵니다.
+     */
+    public void loadList() {
+        manager.updateList(this::onSuccessUpdateSubmissions, this::onFailureFatal);
     }
 
     /**
@@ -60,16 +80,11 @@ public final class LeaderBoardLayout implements RadioGroup.OnCheckedChangeListen
     }
 
     /**
-     * 서버로부터 제출물 목록을 불러옵니다.
-     */
-    private void loadList() {
-        manager.updateList(this::onSuccessUpdateSubmissions, this::onFailureFatal);
-    }
-
-    /**
      * 리더보드를 다시 그립니다.
      */
     private void updateItems() {
+        // 제출물을 아직 볼러오지 못한 경우, 정렬하지 않습니다.
+        if (submissions == null) return;
         // 기존의 아이템들을 모두 지웁니다.
         mContents.removeAllViews();
         // 아이템을 추가합니다.
@@ -94,7 +109,7 @@ public final class LeaderBoardLayout implements RadioGroup.OnCheckedChangeListen
                         // 신고에 성공한 경우의 이벤트입니다.
                         () -> CommonAlert.toast(activity, R.string.view_alert_reported),
                         // 신고에 실패한 경우의 이벤트입니다.
-                        (f) -> CommonAlert.failed(activity, f, R.string.view_alert_report_duplicated)));
+                        (f) -> CommonAlert.failed(activity, f, R.string.view_alert_report_duplicate)));
     }
 
     /**

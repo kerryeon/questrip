@@ -1,5 +1,7 @@
 package com.levelup.Questrip.view;
 
+import android.util.Base64;
+
 import com.levelup.Questrip.common.SubmissionManagerBase;
 import com.levelup.Questrip.data.Quest;
 import com.levelup.Questrip.net.ClientPath;
@@ -45,6 +47,24 @@ public final class ViewSubmissionManager extends SubmissionManagerBase {
     }
 
     /**
+     * 서버에 전송할 데이터를 생성합니다.
+     * 데이터에는 등록할 이미지와 퀘스트 ID를 포함시킵니다.
+     * @param image_base64 전송할 이미지
+     * @return 전송할 데이터
+     */
+    private JSONObject getInput(String image_base64) {
+        JSONObject input = new JSONObject();
+        try {
+            input.put("quest_id", quest.getID());
+            input.put("image", image_base64);
+        } catch (JSONException e) {
+            // Unreachable
+            e.printStackTrace();
+        }
+        return input;
+    }
+
+    /**
      * 서버에 제출물 목록을 갱신해달라고 요청합니다.
      * @param onSuccess 요청이 성공한 경우의 이벤트입니다.
      * @param onFailure 요청이 실패한 경우의 이벤트입니다.
@@ -53,6 +73,34 @@ public final class ViewSubmissionManager extends SubmissionManagerBase {
     public void updateList(onSuccess onSuccess, ClientRequestAsync.OnFailure onFailure) {
         ClientRequest.send(ClientPath.VIEW, getInput(),
                 o -> onUpdateResponseSuccess(o, onSuccess, onFailure), onFailure);
+    }
+
+    /**
+     * 서버에 결과물을 제출합니다.
+     * @param image 이미지
+     * @param onSuccess 요청이 성공한 경우의 이벤트입니다.
+     * @param onFailure 요청이 실패한 경우의 이벤트입니다.
+     */
+    public void trySubmit(final byte[] image, Runnable onSuccess,
+                          ClientRequestAsync.OnFailure onFailure) {
+        ClientRequest.send(ClientPath.SUBMIT, getInput(Base64.encodeToString(image, Base64.DEFAULT)),
+                o -> onSubmitResponseSuccess(o, onSuccess, onFailure), onFailure);
+    }
+
+    /**
+     * 서버로부터 제출 결과를 받은 경우의 이벤트입니다.
+     * @param response 제출 결과
+     * @param onSuccess 요청이 성공적인 경우의 이벤트입니다.
+     * @param onFailure 요청이 실패한 경우의 이벤트입니다.
+     */
+    private void onSubmitResponseSuccess(JSONObject response, Runnable onSuccess,
+                                         ClientRequestAsync.OnFailure onFailure) {
+        try {
+            if (response.getBoolean("accept")) onSuccess.run();
+            else onFailure.run(ClientRequestAsync.Failed.REJECTED);
+        } catch (JSONException e) {
+            onFailure.run(ClientRequestAsync.Failed.INTERNAL);
+        }
     }
 
     /**
