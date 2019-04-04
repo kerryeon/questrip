@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.levelup.Questrip.R;
 import com.levelup.Questrip.board.LeaderBoardLayout;
@@ -37,7 +38,13 @@ public final class ViewActivity extends AppCompatActivity {
      * 필드 및 변수값을 초기화합니다.
      */
     private void init() {
-        leaderBoard = new LeaderBoardLayout(this, new ViewSubmissionManager(getQuest()));
+        final Quest quest = getQuest();
+
+        // 필드
+        leaderBoard = new LeaderBoardLayout(this, new ViewSubmissionManager(quest));
+
+        // 제목
+        ((TextView) findViewById(R.id.view_title)).setText(quest.getTitle());
     }
 
     /**

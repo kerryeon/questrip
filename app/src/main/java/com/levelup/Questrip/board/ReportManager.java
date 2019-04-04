@@ -1,4 +1,4 @@
-package com.levelup.Questrip.common;
+package com.levelup.Questrip.board;
 
 import com.levelup.Questrip.data.Submission;
 import com.levelup.Questrip.net.ClientPath;
@@ -8,7 +8,14 @@ import com.levelup.Questrip.net.ClientRequestAsync;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public final class ReportManager {
+/**
+ * 제출물의 신고 기능을 담당하는 클래스입니다.
+ *
+ * 담당자: 김호
+ *
+ * 역할: 제출물의 신고 프로세스를 구현합니다.
+ */
+final class ReportManager {
 
     /**
      * 선택한 제출물에 대해 신고를 시도합니다.
@@ -17,7 +24,7 @@ public final class ReportManager {
      * @param onSuccess 신고가 정상적으로 진행된 경우의 이벤트입니다.
      * @param onFailure 신고에 실패한 경우의 이벤트입니다.
      */
-    public static void tryReport(final Submission submission, final int reason,
+    static void tryReport(final Submission submission, final int reason,
                                  Runnable onSuccess, ClientRequestAsync.OnFailure onFailure) {
         // 유효한 신고 이유만 허가한다.
         if (reason < 0) return;
@@ -52,9 +59,8 @@ public final class ReportManager {
     private static void onResponseSuccess(JSONObject response, Runnable onSuccess,
                                           ClientRequestAsync.OnFailure onFailure) {
         try {
-            boolean accept = response.getBoolean("accept");
             // 신고에 성공한 경우
-            if (accept) onSuccess.run();
+            if (response.getBoolean("accept")) onSuccess.run();
             // 신고에 실패한 경우
             else onFailure.run(ClientRequestAsync.Failed.UNEXPECTED);
         } catch (JSONException e) {

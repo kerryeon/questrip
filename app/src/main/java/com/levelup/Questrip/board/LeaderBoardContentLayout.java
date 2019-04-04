@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -46,7 +47,7 @@ public final class LeaderBoardContentLayout {
      * @param onReport 신고 버튼을 눌렀을 경우의 이벤트입니다.
      * @param onVote 투표 버튼을 눌렀을 경우의 이벤트입니다.
      */
-    static void addItem(Activity activity, LinearLayout mContents, int index,
+    static View addItem(Activity activity, LinearLayout mContents, int index,
                         Submission submission, boolean useButtons,
                         OnChoose onReport, OnChoose onVote) {
         // 레이아웃을 생성합니다.
@@ -57,8 +58,11 @@ public final class LeaderBoardContentLayout {
         // 필드에 값을 반영합니다.
         mTitle.setText(submission.getNickname());
         mRating.setText(String.valueOf(submission.getRating()));
+        // 이미지를 불러옵니다.
+        submission.loadImage(item.findViewById(R.id.leader_board_photo));
         // 이벤트를 등록합니다.
         addEvent(item, index, useButtons, onReport, onVote);
+        return item;
     }
 
     /**

@@ -27,6 +27,8 @@
     <string name="view_alert_submitted">제출되었습니다!</string>
     <string name="view_alert_reported">신고가 접수되었습니다</string>
     <string name="view_alert_report_duplicate">이미 신고하였습니다</string>
+    <string name="view_alert_vote">"%s"님의 작품에 추천하시겠습니까?</string>
+    <string name="view_alert_vote_duplicate">이미 추천하였습니다</string>
     <string name="view_alert_voted">추천하였습니다</string>
     <!-- LeaderBoard -->
     <string name="leader_board_likes">Likes</string>

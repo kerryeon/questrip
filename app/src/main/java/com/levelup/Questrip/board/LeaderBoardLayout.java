@@ -1,12 +1,13 @@
 package com.levelup.Questrip.board;
 
 import android.app.Activity;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 
 import com.levelup.Questrip.R;
 import com.levelup.Questrip.common.CommonAlert;
-import com.levelup.Questrip.common.ReportManager;
 import com.levelup.Questrip.common.SubmissionManagerBase;
 import com.levelup.Questrip.data.Submission;
 import com.levelup.Questrip.net.ClientRequestAsync;
@@ -25,6 +26,12 @@ import java.util.Vector;
  * 역할: 정해진 순서에 맞추어 결과물을 나열합니다.
  */
 public final class LeaderBoardLayout implements RadioGroup.OnCheckedChangeListener {
+
+    private static int[] imgMedals = {
+            R.drawable.ic_1st_medal,
+            R.drawable.ic_2nd_medal,
+            R.drawable.ic_3rd_medal,
+    };
 
     private Vector<Submission> submissions;
     private SortMode mode;
@@ -90,8 +97,14 @@ public final class LeaderBoardLayout implements RadioGroup.OnCheckedChangeListen
         // 아이템을 추가합니다.
         for (int i = 0; i < submissions.size(); i++) {
             Submission submission = submissions.get(i);
-            LeaderBoardContentLayout.addItem(activity, mContents, i, submission,
+            View item = LeaderBoardContentLayout.addItem(activity, mContents, i, submission,
                     manager.useButtons(), this::onTouchReport, this::onTouchVote);
+            // 메달을 수여합니다.
+            if (manager.useButtons() && mode == SortMode.Rating && i < 3) {
+                ImageView view = item.findViewById(R.id.leader_board_medal);
+                view.setVisibility(View.VISIBLE);
+                view.setImageResource(imgMedals[i]);
+            }
         }
     }
 
@@ -117,8 +130,16 @@ public final class LeaderBoardLayout implements RadioGroup.OnCheckedChangeListen
      * @param index 제출물의 인덱싱 번호
      */
     private void onTouchVote(int index) {
-        CommonAlert.show(activity, R.string.debug_todo);
-        // TODO to be implemented.
+        final Submission submission = submissions.get(index);
+        // 알림창을 띄운다.
+        CommonAlert.show(activity,
+                String.format(activity.getString(R.string.view_alert_vote), submission.getNickname()),
+                () -> VoteManager.tryVote(submission,
+                        // 추천에 성공한 경우의 이벤트입니다.
+                        () -> CommonAlert.toast(activity, R.string.view_alert_voted),
+                        // 추천에 실패한 경우의 이벤트입니다.
+                        (f) -> CommonAlert.failed(activity, f, R.string.view_alert_vote_duplicate)),
+                () -> {});
     }
 
     /**

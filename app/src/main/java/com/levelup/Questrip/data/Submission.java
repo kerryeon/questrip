@@ -1,5 +1,10 @@
 package com.levelup.Questrip.data;
 
+import android.graphics.Bitmap;
+import android.widget.ImageView;
+
+import com.levelup.Questrip.net.ImageManager;
+
 import java.util.Comparator;
 
 /**
@@ -15,7 +20,7 @@ public final class Submission {
     private long user_id;
     private String nickname;
     private String imagePath;
-    private byte[] image;
+    private Bitmap image;
     private long date;
     private long rating;
 
@@ -52,14 +57,6 @@ public final class Submission {
     }
 
     /**
-     * 입축된 이미지를 불러옵니다.
-     * @return 압축된 이미지
-     */
-    public final byte[] getImage() {
-        return image;
-    }
-
-    /**
      * 제출일자를 불러옵니다.
      * @return 제출일자
      */
@@ -73,6 +70,23 @@ public final class Submission {
      */
     public final long getRating() {
         return rating;
+    }
+
+    /**
+     * 입축된 이미지를 불러옵니다.
+     * 다운로드에 실패한 경우는 무시합니다.
+     */
+    public final void loadImage(ImageView imageView) {
+        // 이미 다운로드한 이미지가 있는 경우.
+        // 기존의 이미지를 적용합니다.
+        if (image != null)
+            imageView.setImageBitmap(image);
+        else {
+            ImageManager.load(getImagePath(), bitmap -> {
+                image = bitmap;
+                imageView.setImageBitmap(image);
+            }, (f) -> {});
+        }
     }
 
     /**
@@ -136,16 +150,6 @@ public final class Submission {
          */
         public Builder setImagePath(String value) {
             submission.imagePath = value;
-            return this;
-        }
-
-        /**
-         * 제출물의 입축된 이미지를 설정합니다.
-         * @param value: 입축된 이미지
-         * @return Builder
-         */
-        public Builder setImage(byte[] value) {
-            submission.image = value;
             return this;
         }
 

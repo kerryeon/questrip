@@ -18,4 +18,7 @@ public final class ClientPath {
     // about leader_board
     public static String ABOUT_BOARD = "/me/board";
 
+    // images
+    static String PATH_IMAGE = "/u/img/";
+
 }
