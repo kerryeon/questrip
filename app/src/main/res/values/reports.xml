@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="view_list_report">
+        <item>폭력적 및 선정적</item>
+        <item>광고 및 홍보</item>
+        <item>도배</item>
+        <item>관련없음</item>
+        <item>기타</item>
+    </string-array>
+</resources>

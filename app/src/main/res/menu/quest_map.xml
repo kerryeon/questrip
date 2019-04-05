@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/quest_map_item_about"
+            android:icon="@drawable/ic_my_info"
+            android:title="@string/about_field_title" />
+        <item
+            android:id="@+id/quest_map_item_config"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="@string/config_field_title" />
+    </group>
+
+</menu>
