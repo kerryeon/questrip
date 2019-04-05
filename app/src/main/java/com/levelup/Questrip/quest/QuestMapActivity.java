@@ -128,7 +128,7 @@ public final class QuestMapActivity extends FragmentActivity implements Navigati
      */
     private void showConfig() {
         Intent intent = new Intent(getApplicationContext(), ConfigActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, getResources().getInteger(R.integer.CODE_INTENT_CONFIG));
     }
 
     /**
@@ -211,6 +211,24 @@ public final class QuestMapActivity extends FragmentActivity implements Navigati
                 break;
         }
         return false;
+    }
+
+    /**
+     * 하위 액티비티로부터 결과를 수신받습니다.
+     * @param requestCode: 요청 코드
+     * @param resultCode: 응답 코드
+     * @param data: 결과값을 포함한 객체
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // 유효한 응답에만 반응합니다.
+        if (resultCode != RESULT_OK) return;
+        // 환경설정으로부터 앱 종료를 입력받았을 경우의 이벤트입니다.
+        if (requestCode == getResources().getInteger(R.integer.CODE_INTENT_CONFIG)) {
+            final boolean exit = data.getBooleanExtra("exit", false);
+            if (exit) finishAndRemoveTask();
+        }
     }
 
     /**

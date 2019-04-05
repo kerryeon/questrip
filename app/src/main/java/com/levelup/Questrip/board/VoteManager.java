@@ -26,8 +26,7 @@ final class VoteManager {
     static void tryVote(final Submission submission, Runnable onSuccess,
                         ClientRequestAsync.OnFailure onFailure) {
         // 서버에 추천 요청을 보냅니다.
-        ClientRequest.send(ClientPath.VOTE, getInput(submission.getID()),
-                o -> onResponseSuccess(o, onSuccess, onFailure), onFailure);
+        ClientRequest.send(ClientPath.VOTE, getInput(submission.getID()), onSuccess, onFailure);
     }
 
     /**
@@ -44,26 +43,6 @@ final class VoteManager {
             e.printStackTrace();
         }
         return input;
-    }
-
-    /**
-     * 서버로부터 추천 결과를 수신한 경우의 이벤트입니다.
-     * @param response 추천 결과
-     * @param onSuccess 추천이 정상적으로 진행된 경우의 이벤트입니다.
-     * @param onFailure 추천에 실패한 경우의 이벤트입니다.
-     */
-    private static void onResponseSuccess(JSONObject response, Runnable onSuccess,
-                                          ClientRequestAsync.OnFailure onFailure) {
-        try {
-            // 추천에 성공한 경우
-            if (response.getBoolean("accept")) onSuccess.run();
-            // 추천에 실패한 경우
-            else onFailure.run(ClientRequestAsync.Failed.UNEXPECTED);
-        } catch (JSONException e) {
-            // Unreachable
-            e.printStackTrace();
-            onFailure.run(ClientRequestAsync.Failed.INTERNAL);
-        }
     }
 
 }

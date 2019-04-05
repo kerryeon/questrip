@@ -40,7 +40,7 @@
     <string name="config_field_title">환경설정</string>
     <string name="config_alert_logout">로그아웃 하시겠습니까?</string>
     <string name="config_alert_sign_off">정말 Questrip 을 회원탈퇴 하시겠습니까? 탈퇴한 계정은 복구하실 수 없습니다.</string>
-    <string name="config_alert_sign_off_success">그동안 Questrip 을 사랑해주셔서 감사했습니다.</string>
+    <string name="config_alert_sign_off_success">그동안 Questrip 을 사랑해주셔서 감사했습니다. \n 다시 돌아오시기를 기다리겠습니다.</string>
     <string name="config_button_logout">로그아웃</string>
     <string name="config_button_sign_off">회원탈퇴</string>
     <string name="config_button_open_source">오픈소스 약관</string>

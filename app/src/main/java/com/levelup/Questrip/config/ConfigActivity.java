@@ -8,6 +8,7 @@ import android.view.View;
 import com.levelup.Questrip.R;
 import com.levelup.Questrip.common.CommonAlert;
 import com.levelup.Questrip.common.LoginManager;
+import com.levelup.Questrip.quest.QuestMapActivity;
 
 /**
  * 환경설정 화면 액티비티입니다.
@@ -72,16 +73,23 @@ public final class ConfigActivity extends AppCompatActivity {
      * 회원탈퇴한 후에는, 그동안 감사했다는 메세지를 띄운 후, 앱을 종료합니다.
      */
     private void trySignOff() {
-        // TODO to be implemented.
-        CommonAlert.show(this, R.string.config_alert_sign_off_success, this::exitProcess);
+        SignOffManager.trySignOff(
+                // 회원탈퇴 성공
+                () -> CommonAlert.show(this, R.string.config_alert_sign_off_success, this::exitProcess),
+                // 회원탈퇴 실패
+                f -> CommonAlert.failed(this, f)
+        );
     }
 
     /**
      * 프로세스를 안전하고 완전하게 종료합니다.
+     * 상위 액티비티에 종료 요청을 보냄으로써 이를 구현합니다.
      */
     private void exitProcess() {
-        finishAndRemoveTask();
-        android.os.Process.killProcess(android.os.Process.myPid());
+        Intent intent = new Intent(getApplicationContext(), QuestMapActivity.class);
+        intent.putExtra("exit", true);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
 }

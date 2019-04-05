@@ -30,7 +30,7 @@ final class ReportManager {
         if (reason < 0) return;
         // 서버에 신고 요청을 보냅니다.
         ClientRequest.send(ClientPath.REPORT, getInput(submission.getID(), reason),
-                o -> onResponseSuccess(o, onSuccess, onFailure), onFailure);
+                onSuccess, onFailure);
     }
 
     /**
@@ -48,26 +48,6 @@ final class ReportManager {
             e.printStackTrace();
         }
         return input;
-    }
-
-    /**
-     * 서버로부터 신고 결과를 수신한 경우의 이벤트입니다.
-     * @param response 신고 결과
-     * @param onSuccess 신고가 정상적으로 진행된 경우의 이벤트입니다.
-     * @param onFailure 신고에 실패한 경우의 이벤트입니다.
-     */
-    private static void onResponseSuccess(JSONObject response, Runnable onSuccess,
-                                          ClientRequestAsync.OnFailure onFailure) {
-        try {
-            // 신고에 성공한 경우
-            if (response.getBoolean("accept")) onSuccess.run();
-            // 신고에 실패한 경우
-            else onFailure.run(ClientRequestAsync.Failed.UNEXPECTED);
-        } catch (JSONException e) {
-            // Unreachable
-            e.printStackTrace();
-            onFailure.run(ClientRequestAsync.Failed.INTERNAL);
-        }
     }
 
 }

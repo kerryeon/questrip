@@ -39,29 +39,7 @@ final class SignUpManager {
             e.printStackTrace();
         }
         // 서버로 전송합니다.
-        ClientRequest.send(ClientPath.SIGN_UP, object,
-                o -> onSignUpResponse(o, success, failure), failure);
-    }
-
-    /**
-     * 회원가입 결과를 분류합니다.
-     * @param response: 서버로부터 수신받은 JSON 데이터
-     * @param success: 회원가입에 성공한 경우의 이벤트입니다.
-     * @param failure: 회원가입에 실패한 경우의 이벤트입니다.
-     */
-    private static void onSignUpResponse(JSONObject response, Runnable success,
-                                         ClientRequestAsync.OnFailure failure) {
-        try {
-            boolean accept = response.getBoolean("accept");
-            // 회원가입에 성공한 경우
-            if (accept) success.run();
-            // 회원가입이 거절된 경우
-            else failure.run(ClientRequestAsync.Failed.REJECTED);
-        } catch (JSONException e) {
-            // 수신받은 데이터에 이상이 있는 경우.
-            e.printStackTrace();
-            failure.run(ClientRequestAsync.Failed.INTERNAL);
-        }
+        ClientRequest.send(ClientPath.SIGN_UP, object, success, failure);
     }
 
 }

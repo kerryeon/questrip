@@ -84,23 +84,7 @@ public final class ViewSubmissionManager extends SubmissionManagerBase {
     public void trySubmit(final byte[] image, Runnable onSuccess,
                           ClientRequestAsync.OnFailure onFailure) {
         ClientRequest.send(ClientPath.SUBMIT, getInput(Base64.encodeToString(image, Base64.DEFAULT)),
-                o -> onSubmitResponseSuccess(o, onSuccess, onFailure), onFailure);
-    }
-
-    /**
-     * 서버로부터 제출 결과를 받은 경우의 이벤트입니다.
-     * @param response 제출 결과
-     * @param onSuccess 요청이 성공적인 경우의 이벤트입니다.
-     * @param onFailure 요청이 실패한 경우의 이벤트입니다.
-     */
-    private void onSubmitResponseSuccess(JSONObject response, Runnable onSuccess,
-                                         ClientRequestAsync.OnFailure onFailure) {
-        try {
-            if (response.getBoolean("accept")) onSuccess.run();
-            else onFailure.run(ClientRequestAsync.Failed.REJECTED);
-        } catch (JSONException e) {
-            onFailure.run(ClientRequestAsync.Failed.INTERNAL);
-        }
+                onSuccess, onFailure);
     }
 
     /**

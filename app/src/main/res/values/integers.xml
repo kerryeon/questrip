@@ -3,6 +3,8 @@
     <integer name="CODE_ACTIVITY_SIGN_UP_WAIT">500</integer>
     <integer name="CODE_ACTIVITY_QUEST_MAP_LIMIT_LIST">5</integer>
     <integer name="CODE_ACTIVITY_QUEST_MAP_WAIT_FOCUS">1800</integer>
-    <integer name="CODE_INTENT_ADDRESS">1000</integer>
     <integer name="CODE_PERMISSIONS_REQUEST">100</integer>
+    <!-- Intents -->
+    <integer name="CODE_INTENT_ADDRESS">1000</integer>
+    <integer name="CODE_INTENT_CONFIG">200</integer>
 </resources>
