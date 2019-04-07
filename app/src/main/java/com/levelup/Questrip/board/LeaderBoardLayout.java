@@ -117,7 +117,7 @@ public final class LeaderBoardLayout implements RadioGroup.OnCheckedChangeListen
         // 신고 이유 목록을 불러온다.
         final String[] lists = activity.getResources().getStringArray(R.array.view_list_report);
         // 신고창을 띄운다.
-        CommonAlert.choose(activity, R.string.view_title_report, lists,
+        CommonAlert.choose(activity, R.string.view_field_report, lists,
                 chosen -> ReportManager.tryReport(submission, chosen,
                         // 신고에 성공한 경우의 이벤트입니다.
                         () -> CommonAlert.toast(activity, R.string.view_alert_reported),

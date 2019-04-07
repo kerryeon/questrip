@@ -94,7 +94,7 @@ public final class ClientRequest {
             // 요청에 성공한 경우
             if (response.getBoolean("accept")) success.run();
             // 요청이 실패한 경우
-            else failure.run(ClientRequestAsync.Failed.UNEXPECTED);
+            else failure.run(ClientRequestAsync.Failed.REJECTED);
         } catch (JSONException e) {
             // Unreachable
             e.printStackTrace();

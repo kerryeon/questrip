@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -53,7 +52,7 @@ public final class LeaderBoardContentLayout {
         // 레이아웃을 생성합니다.
         View item = getItemView(activity, mContents);
         // 필드를 불러옵니다.
-        TextView mTitle = item.findViewById(R.id.leader_board_title);
+        TextView mTitle = item.findViewById(R.id.leader_board_field_title);
         TextView mRating = item.findViewById(R.id.leader_board_field_rating);
         // 필드에 값을 반영합니다.
         mTitle.setText(submission.getNickname());
