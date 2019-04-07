@@ -2,21 +2,21 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
-    android:layout_marginBottom="16dp"
+    android:layout_marginLeft="0dp"
+    android:layout_marginRight="0dp"
+    android:layout_marginBottom="0dp"
     android:background="@color/bg_light"
     tools:context=".board.LeaderBoardContentLayout">
 
     <TextView
-        android:id="@+id/leader_board_field_title"
+        android:id="@+id/shop_content_field_title"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="@string/sign_up_field_nickname"
+        android:text="물품 이름"
         android:textColor="@android:color/black"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,15 +24,17 @@
 
     <FrameLayout
         android:id="@+id/frameLayout"
-        android:layout_width="match_parent"
-        android:layout_height="208dp"
+        android:layout_width="157dp"
+        android:layout_height="138dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/leader_board_field_title">
+        app:layout_constraintTop_toBottomOf="@+id/shop_content_field_title">
 
         <ImageView
-            android:id="@+id/leader_board_photo"
+            android:id="@+id/shop_content_photo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/bg_intro"
@@ -41,17 +43,10 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <ImageView
-            android:id="@+id/leader_board_medal"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="@+id/leader_board_photo"
-            app:layout_constraintTop_toTopOf="@+id/leader_board_photo" />
     </FrameLayout>
 
     <android.support.constraint.ConstraintLayout
-        android:layout_width="0dp"
+        android:layout_width="150dp"
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
@@ -70,7 +65,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/leader_board_field_rating"
+                android:id="@+id/shop_content_field_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -81,37 +76,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/leader_board_likes"
+                android:text="@string/shop_unit_money"
                 android:textSize="18sp"
                 tools:layout_editor_absoluteX="99dp"
                 tools:layout_editor_absoluteY="335dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageButton
-                android:id="@+id/leader_board_btn_report"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="24dp"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:src="@drawable/ic_siren" />
-
-            <ImageButton
-                android:id="@+id/leader_board_btn_vote"
-                android:layout_width="27dp"
-                android:layout_height="27dp"
-                android:layout_marginEnd="0dp"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:src="@drawable/ic_likes" />
         </LinearLayout>
 
     </android.support.constraint.ConstraintLayout>
