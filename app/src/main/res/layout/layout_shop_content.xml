@@ -11,7 +11,7 @@
     tools:context=".board.LeaderBoardContentLayout">
 
     <TextView
-        android:id="@+id/shop_board_prod_name"
+        android:id="@+id/shop_content_field_title"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginStart="16dp"
@@ -31,10 +31,10 @@
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/shop_board_prod_name">
+        app:layout_constraintTop_toBottomOf="@+id/shop_content_field_title">
 
         <ImageView
-            android:id="@+id/shop_board_prod_photo"
+            android:id="@+id/shop_content_photo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/bg_intro"
@@ -65,7 +65,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/shop_board_prod_price"
+                android:id="@+id/shop_content_field_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -76,7 +76,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="원"
+                android:text="@string/shop_unit_money"
                 android:textSize="18sp"
                 tools:layout_editor_absoluteX="99dp"
                 tools:layout_editor_absoluteY="335dp" />

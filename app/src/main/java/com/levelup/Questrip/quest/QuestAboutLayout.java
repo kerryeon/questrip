@@ -59,7 +59,13 @@ public final class QuestAboutLayout {
         mTitle.setText(quest.getTitle());
         mDesc.setText(quest.getDescription());
         mLocation.setText(quest.getLocation());
-        mPeriod.setText(String.valueOf(quest.getDateEnd()));
+        // 날짜
+        final long dateEnd = quest.getDateEnd();
+        final long dateYear = dateEnd / 10000;
+        final long dateMonth = (dateEnd / 100) % 100;
+        final long dateDay = dateEnd % 100;
+        final String dateFormat = layout.getResources().getString(R.string.quest_map_field_period);
+        mPeriod.setText(String.format(dateFormat, dateYear, dateMonth, dateDay));
         // 화면에 보이지 않는 경우에만 애니메이션을 실행합니다.
         if (! isOpen()) {
             _isOpen = true;

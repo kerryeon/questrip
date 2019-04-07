@@ -11,7 +11,7 @@
     tools:context=".board.LeaderBoardContentLayout">
 
     <TextView
-        android:id="@+id/shop_board_prod_name"
+        android:id="@+id/leader_board_field_title"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginStart="16dp"
@@ -29,10 +29,10 @@
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/shop_board_prod_name">
+        app:layout_constraintTop_toBottomOf="@+id/leader_board_field_title">
 
         <ImageView
-            android:id="@+id/shop_board_prod_photo"
+            android:id="@+id/leader_board_photo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/bg_intro"
@@ -46,8 +46,8 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:visibility="gone"
-            app:layout_constraintStart_toStartOf="@+id/shop_board_prod_photo"
-            app:layout_constraintTop_toTopOf="@+id/shop_board_prod_photo" />
+            app:layout_constraintStart_toStartOf="@+id/leader_board_photo"
+            app:layout_constraintTop_toTopOf="@+id/leader_board_photo" />
     </FrameLayout>
 
     <android.support.constraint.ConstraintLayout
