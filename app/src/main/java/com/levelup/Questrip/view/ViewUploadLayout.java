@@ -187,16 +187,17 @@ class ViewUploadLayout {
      * @return 회전된 이미지
      */
     private Bitmap transformBitmap(Bitmap bitmap) {
-        final int imageW = bitmap.getWidth();
-        final int imageH = bitmap.getHeight();
         final int degrees = exifOrientationToDegrees();
         // 이미지 회전
         if (degrees != 0) {
             Matrix matrix = new Matrix();
             matrix.postRotate(exifOrientationToDegrees());
-            bitmap = Bitmap.createBitmap(bitmap, 0, 0, imageW, imageH, matrix, true);
+            bitmap = Bitmap.createBitmap(bitmap, 0, 0,
+                    bitmap.getWidth(), bitmap.getHeight(), matrix, true);
         }
         // 크기 조정
+        final int imageW = bitmap.getWidth();
+        final int imageH = bitmap.getHeight();
         if (imageW > MAX_WIDTH || imageH > MAX_HEIGHT) {
             final double ratioW = (double) imageW / MAX_WIDTH;
             final double ratioH = (double) imageH / MAX_HEIGHT;
