@@ -199,13 +199,16 @@ public final class Submission {
 
         /**
          * 서로 다른 두 퀘스트 제출물의 추천수를 비교합니다.
+         * 동점인 경우, 최신순이 우선됩니다.
          * @param o1 퀘스트 제출물
          * @param o2 다른 퀘스트 제출물
          * @return o1 이 추천수가 더 낮다면 true 를 반환합니다.
          */
         @Override
         public int compare(Submission o1, Submission o2) {
-            return (int) (o2.getRating() - o1.getRating());
+            return o2.getRating() != o1.getRating()
+                    ? (int) (o2.getRating() - o1.getRating())
+                    : (int) (o2.getDate() - o1.getDate());
         }
 
     }
@@ -226,13 +229,16 @@ public final class Submission {
 
         /**
          * 서로 다른 두 퀘스트 제출물의 제출일자를 비교합니다.
+         * 동시간대인 경우, 추천순이 우선됩니다.
          * @param o1 퀘스트 제출물
          * @param o2 다른 퀘스트 제출물
          * @return o1 이 더 나중에 제출되었다면 true 를 반환합니다.
          */
         @Override
         public int compare(Submission o1, Submission o2) {
-            return (int) (o2.getDate() - o1.getDate());
+            return o2.getDate() != o1.getDate()
+                    ? (int) (o2.getDate() - o1.getDate())
+                    : (int) (o2.getRating() - o1.getRating());
         }
 
     }

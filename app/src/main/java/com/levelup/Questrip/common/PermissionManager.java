@@ -40,6 +40,7 @@ final class PermissionManager {
         // 퍼미션 허가를 요청합니다.
         requestPermissions(
                 Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.CAMERA,
                 Manifest.permission.RECEIVE_BOOT_COMPLETED
         );
     }
@@ -54,6 +55,7 @@ final class PermissionManager {
         // 각 퍼미션을 검사합니다.
         // 중간에 허가가 필요한 퍼미션이 있다면, 다음 검사를 중단합니다.
         boolean denied = getPermission(Manifest.permission.ACCESS_FINE_LOCATION, R.string.permission_location);
+        denied = denied || getPermission(Manifest.permission.CAMERA, R.string.permission_camera);
         denied = denied || getPermission(Manifest.permission.INTERNET, R.string.permission_internet);
         // 결과를 저장하고 반환합니다.
         granted = !denied;

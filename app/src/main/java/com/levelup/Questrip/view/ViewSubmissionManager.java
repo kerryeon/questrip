@@ -83,7 +83,7 @@ public final class ViewSubmissionManager extends SubmissionManagerBase {
      */
     public void trySubmit(final byte[] image, Runnable onSuccess,
                           ClientRequestAsync.OnFailure onFailure) {
-        ClientRequest.send(ClientPath.SUBMIT, getInput(Base64.encodeToString(image, Base64.DEFAULT)),
+        ClientRequest.send(ClientPath.SUBMIT, getInput(Base64.encodeToString(image, Base64.NO_WRAP)),
                 onSuccess, onFailure);
     }
 

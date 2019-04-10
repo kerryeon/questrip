@@ -26,9 +26,6 @@ final class ReportManager {
      */
     static void tryReport(final Submission submission, final int reason,
                                  Runnable onSuccess, ClientRequestAsync.OnFailure onFailure) {
-        // 유효한 신고 이유만 허가한다.
-        if (reason < 0) return;
-        // 서버에 신고 요청을 보냅니다.
         ClientRequest.send(ClientPath.REPORT, getInput(submission.getID(), reason),
                 onSuccess, onFailure);
     }

@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.util.LruCache;
 
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.net.URL;
 
@@ -22,6 +23,17 @@ public final class ImageManager {
     public static void load(String path, OnSuccess onSuccess,
                             ClientRequestAsync.OnFailure onFailure) {
         new ImageDownloaderAsync(onSuccess, onFailure).execute(path);
+    }
+
+    /**
+     * 이미지를 JPEG 압축합니다.
+     * @param bitmap 이미지
+     * @return 압축한 이미지
+     */
+    public static byte[] getBytes(final Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        return stream.toByteArray();
     }
 
     /**
