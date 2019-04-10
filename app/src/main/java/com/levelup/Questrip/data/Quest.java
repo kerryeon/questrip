@@ -236,7 +236,7 @@ public final class Quest implements Comparable<Quest>, Serializable {
          * @return Builder
          */
         public Builder setDateBegin(long value) {
-            quest.date_begin = value;
+            quest.date_begin = value / 1_000_000;
             return this;
         }
 
@@ -246,7 +246,7 @@ public final class Quest implements Comparable<Quest>, Serializable {
          * @return Builder
          */
         public Builder setDateEnd(long value) {
-            quest.date_end = value;
+            quest.date_end = value / 1_000_000;
             return this;
         }
 

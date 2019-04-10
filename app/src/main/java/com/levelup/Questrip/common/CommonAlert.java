@@ -3,6 +3,7 @@ package com.levelup.Questrip.common;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
 
@@ -17,8 +18,6 @@ import com.levelup.Questrip.net.ClientRequestAsync;
  * 역할: 일반적인 알림창을 띄웁니다.
  */
 public final class CommonAlert {
-
-    private static int numChosen;
 
     /**
      * "확인" 버튼 하나 있는 일반적인 알림창을 띄웁니다.
@@ -111,27 +110,19 @@ public final class CommonAlert {
      * 여러 선택지가 있는 알림창을 띄웁니다.
      * @param context 현재 액티비티
      * @param titleId 제목 ID
-     * @param lists 선택지 목록
+     * @param listId 선택지 목록 ID
      * @param onChoose 선택지 중 하나를 선택한 경우의 이벤트입니다.
      *                 취소를 누른 경우 -1을 반환합니다.
      */
-    public static void choose(Context context, int titleId, String[] lists, OnChoose onChoose) {
-        // 선택지를 초기화한다.
-        numChosen = -1;
-        // 알림창의 띄운다.
+    public static void choose(Context context, int titleId, int listId, OnChoose onChoose) {
         new AlertDialog.Builder(context)
                 .setTitle(titleId)
-                .setSingleChoiceItems(
-                        lists, -1, (dialog, i) -> numChosen = i
-                )
-                .setPositiveButton(R.string.common_alert_confirm,
-                        (dialog, which) -> onChoose.run(numChosen)
+                .setItems(
+                        context.getResources().getStringArray(listId),
+                        (dialog, i) -> onChoose.run(i)
                 )
                 .setNegativeButton(R.string.common_alert_cancel,
-                        (dialog, which) -> onChoose.run(-1)
-                )
-                .setOnCancelListener(
-                        dialog -> onChoose.run(-1)
+                        (dialog, which) -> dialog.dismiss()
                 )
                 .create().show();
     }

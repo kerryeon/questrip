@@ -1,6 +1,7 @@
 package com.levelup.Questrip.view;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,8 +10,8 @@ import android.widget.TextView;
 import com.levelup.Questrip.R;
 import com.levelup.Questrip.board.LeaderBoardLayout;
 import com.levelup.Questrip.common.CommonAlert;
-import com.levelup.Questrip.common.FileManager;
 import com.levelup.Questrip.data.Quest;
+import com.levelup.Questrip.net.ImageManager;
 
 /**
  * 리더보드 화면 액티비티입니다.
@@ -26,6 +27,7 @@ import com.levelup.Questrip.data.Quest;
 public final class ViewActivity extends AppCompatActivity {
 
     LeaderBoardLayout leaderBoard;
+    ViewUploadLayout viewUploadLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,7 @@ public final class ViewActivity extends AppCompatActivity {
      */
     private void init() {
         final Quest quest = getQuest();
+        viewUploadLayout = new ViewUploadLayout(this);
 
         // 필드
         leaderBoard = new LeaderBoardLayout(this, new ViewSubmissionManager(quest));
@@ -50,11 +53,11 @@ public final class ViewActivity extends AppCompatActivity {
     /**
      * 사용자가 단말기에서 이미지를 선택한 경우의 이벤트입니다.
      * 이미지를 불러와 서버에 업로드합니다.
-     * @param path 이미지 경로
+     * @param bitmap 이미지
      */
-    private void onSelectImage(final String path) {
+    private void onSelectImage(final Bitmap bitmap) {
         // 전송할 사진을 불러옵니다.
-        final byte[] input = FileManager.getBytes(path);
+        final byte[] input = ImageManager.getBytes(bitmap);
         // 서버에 제출합니다.
         leaderBoard.trySubmit(input, this::onSuccessSubmit,
                 (f) -> CommonAlert.failed(this, f));
@@ -86,8 +89,24 @@ public final class ViewActivity extends AppCompatActivity {
      * @param view 도전하기 버튼
      */
     public void onSubmit(View view) {
-        // TODO to be implemented.
-        CommonAlert.show(this, R.string.debug_todo);
+        viewUploadLayout.begin(this::onSelectImage);
+    }
+
+    /**
+     * 업로드 레이아웃에 결과를 전달합니다.
+     * @param requestCode 요청 코드
+     * @param resultCode 결과 코드
+     * @param data 전달 데이터
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != RESULT_OK) return;
+
+        if (requestCode == viewUploadLayout.CODE_INTENT_IMAGE_CAMERA)
+            viewUploadLayout.showImage();
+        else if (requestCode == viewUploadLayout.CODE_INTENT_IMAGE_GALLERY)
+            viewUploadLayout.showImage(data.getData());
     }
 
 }

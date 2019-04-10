@@ -7,4 +7,6 @@
     <!-- Intents -->
     <integer name="CODE_INTENT_ADDRESS">1000</integer>
     <integer name="CODE_INTENT_CONFIG">200</integer>
+    <integer name="CODE_INTENT_IMAGE_CAMERA">400</integer>
+    <integer name="CODE_INTENT_IMAGE_GALLERY">401</integer>
 </resources>
