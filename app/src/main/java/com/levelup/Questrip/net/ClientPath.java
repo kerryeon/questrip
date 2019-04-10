@@ -20,6 +20,6 @@ public final class ClientPath {
     public static String ABOUT_BOARD = "/me/board";
 
     // images
-    static String PATH_IMAGE = "/u/img/";
+    public static String PATH_IMAGE = "/u/img/";
 
 }

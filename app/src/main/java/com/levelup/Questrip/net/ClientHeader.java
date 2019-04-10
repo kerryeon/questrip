@@ -18,7 +18,7 @@ import java.util.Locale;
  *
  * 역할: 서버에 매번 전송할 데이터들을 저장하고 관리합니다.
  */
-final class ClientHeader {
+public final class ClientHeader {
 
     private static final String PROTOCOL = "http";
     private static final String HOST = "203.255.3.181";
@@ -44,7 +44,7 @@ final class ClientHeader {
      * @param path: 요청 URI
      * @return 요청 URL
      */
-    static URL composeURL(String path) {
+    public static URL composeURL(String path) {
         try {
             return new URL(String.format(
                             Locale.US,
