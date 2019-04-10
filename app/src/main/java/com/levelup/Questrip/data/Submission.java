@@ -1,9 +1,9 @@
 package com.levelup.Questrip.data;
 
-import android.graphics.Bitmap;
+import android.app.Activity;
 import android.widget.ImageView;
 
-import com.levelup.Questrip.net.ImageManager;
+import com.levelup.Questrip.common.ImageManager;
 
 import java.util.Comparator;
 
@@ -20,7 +20,6 @@ public final class Submission {
     private long user_id;
     private String nickname;
     private String imagePath;
-    private Bitmap image;
     private long date;
     private long rating;
 
@@ -75,18 +74,11 @@ public final class Submission {
     /**
      * 입축된 이미지를 불러옵니다.
      * 다운로드에 실패한 경우는 무시합니다.
+     * @param activity 현재 액티비티
+     * @param imageView 이미지 레이아웃
      */
-    public final void loadImage(ImageView imageView) {
-        // 이미 다운로드한 이미지가 있는 경우.
-        // 기존의 이미지를 적용합니다.
-        if (image != null)
-            imageView.setImageBitmap(image);
-        else {
-            ImageManager.load(getImagePath(), bitmap -> {
-                image = bitmap;
-                imageView.setImageBitmap(image);
-            }, (f) -> {});
-        }
+    public final void loadImage(Activity activity, ImageView imageView) {
+        ImageManager.load(activity, imageView, getImagePath());
     }
 
     /**
@@ -94,7 +86,6 @@ public final class Submission {
      */
     private Submission() {
         nickname = "";
-        image = null;
         date = 0;
         rating = 0;
     }

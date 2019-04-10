@@ -2,14 +2,17 @@ package com.levelup.Questrip.board;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.levelup.Questrip.R;
+import com.levelup.Questrip.common.PhotoActivity;
 import com.levelup.Questrip.data.Submission;
 
 /**
@@ -58,9 +61,9 @@ public final class LeaderBoardContentLayout {
         mTitle.setText(submission.getNickname());
         mRating.setText(String.valueOf(submission.getRating()));
         // 이미지를 불러옵니다.
-        submission.loadImage(item.findViewById(R.id.leader_board_photo));
+        submission.loadImage(activity, item.findViewById(R.id.leader_board_photo));
         // 이벤트를 등록합니다.
-        addEvent(item, index, useButtons, onReport, onVote);
+        addEvent(activity, item, index, useButtons, submission, onReport, onVote);
         return item;
     }
 
@@ -99,14 +102,17 @@ public final class LeaderBoardContentLayout {
 
     /**
      * 각종 이벤트를 추가합니다.
+     * @param activity 현재 액티비티
      * @param item 아이템 레이아웃
      * @param index 제출물의 인덱싱 번호
      * @param useButtons 신고, 추천 버튼을 사용하면 true 를 입력합니다.
+     * @param submission 신고 버튼을 눌렀을 경우의 이벤트입니다.
      * @param onReport 신고 버튼을 눌렀을 경우의 이벤트입니다.
      * @param onVote 투표 버튼을 눌렀을 경우의 이벤트입니다.
      */
-    private static void addEvent(View item, int index, boolean useButtons,
-                                 OnChoose onReport, OnChoose onVote) {
+    private static void addEvent(Activity activity, View item, int index, boolean useButtons,
+                                 Submission submission, OnChoose onReport, OnChoose onVote) {
+        ImageView mPhoto = item.findViewById(R.id.leader_board_photo);
         ImageButton mBtnReport = item.findViewById(R.id.leader_board_btn_report);
         ImageButton mBtnVote = item.findViewById(R.id.leader_board_btn_vote);
         // 신고 및 추천 버튼을 사용하는 경우, 각각에 대한 이벤트를 추가합니다.
@@ -119,6 +125,12 @@ public final class LeaderBoardContentLayout {
             mBtnReport.setVisibility(View.GONE);
             mBtnVote.setVisibility(View.GONE);
         }
+        // 이미지를 터치한 경우, 전체화면으로 보입니다.
+        mPhoto.setOnClickListener(v -> {
+            Intent intent = new Intent(activity.getApplicationContext(), PhotoActivity.class);
+            intent.putExtra(PhotoActivity.EXTRA_IMAGE_PATH, submission.getImagePath());
+            activity.startActivity(intent);
+        });
     }
 
     /**

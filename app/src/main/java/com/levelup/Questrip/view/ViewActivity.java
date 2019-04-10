@@ -2,7 +2,7 @@ package com.levelup.Questrip.view;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -11,7 +11,7 @@ import com.levelup.Questrip.R;
 import com.levelup.Questrip.board.LeaderBoardLayout;
 import com.levelup.Questrip.common.CommonAlert;
 import com.levelup.Questrip.data.Quest;
-import com.levelup.Questrip.net.ImageManager;
+import com.levelup.Questrip.common.ImageManager;
 
 /**
  * 리더보드 화면 액티비티입니다.

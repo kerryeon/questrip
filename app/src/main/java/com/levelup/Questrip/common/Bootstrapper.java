@@ -2,14 +2,13 @@ package com.levelup.Questrip.common;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.levelup.Questrip.R;
 import com.levelup.Questrip.anim.Sliding;
-import com.levelup.Questrip.debug.DevDigest;
 
 /**
  * 첫 실행시 실행되는 액티비티를 Bootstrapper 라고 합니다.

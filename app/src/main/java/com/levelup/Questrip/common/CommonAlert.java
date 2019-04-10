@@ -3,8 +3,8 @@ package com.levelup.Questrip.common;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.support.v7.app.AlertDialog;
+
+import androidx.appcompat.app.AlertDialog;
 import android.widget.Toast;
 
 import com.levelup.Questrip.R;
